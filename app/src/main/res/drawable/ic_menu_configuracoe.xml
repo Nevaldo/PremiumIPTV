@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/ic_menu_configuracoes.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:pathData="M12,8A4,4 0 1,1 12,16A4,4 0 1,1 12,8"
+        android:strokeColor="#A855F7"
+        android:strokeWidth="1.8"
+        android:fillColor="#00000000"/>
+
+    <path
+        android:pathData="M12,2V5M12,19V22M4.9,4.9L7,7M17,17L19.1,19.1M2,12H5M19,12H22M4.9,19.1L7,17M17,7L19.1,4.9"
+        android:strokeColor="#A855F7"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"/>
+</vector>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0D0D14</color>
+    <color name="colorPrimaryDark">#0A0A0F</color>
+    <color name="colorAccent">#8B3DFF</color>
+    
+    <!-- Backgrounds -->
+    <color name="bg_main">#08080C</color>
+    <color name="bg_surface">#12121A</color>
+    <color name="bg_surface_light">#1A1A24</color>
+    <color name="bg_menu_active">#1E0F3D</color>
+
+
+    <color name="bg_menu_degrader1">#12002B</color>
+    <color name="bg_menu_degrader2">#7A2BFF</color>
+
+    <!-- Texts -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#888888</color>
+    <color name="text_accent">#A87CFA</color>
+    
+    <!-- Status -->
+    <color name="live_red">#FF0033</color>
+</resources>

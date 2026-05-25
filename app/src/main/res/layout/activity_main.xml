@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_main"
+    android:animateLayoutChanges="true"
+    tools:context=".MainActivity">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:paddingHorizontal="24dp">
+
+        <LinearLayout
+            android:id="@+id/leftGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@android:drawable/star_on"
+                app:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PREMIUM IPTV"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPremiumTop"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_centerInParent="true"
+            android:text="PREMIUM"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            android:backgroundTint="#00000000"
+            android:background="@drawable/bg_menu_item_active"
+            android:paddingHorizontal="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:focusable="true"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/rightGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_marginEnd="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20:45"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12/05/2024"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="@color/text_primary"
+                android:layout_marginEnd="16dp"
+                android:focusable="true" />
+
+            <ImageView
+                android:id="@+id/ivSettings"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="@color/text_primary"
+                android:layout_marginEnd="16dp"
+                android:focusable="true" />
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_more"
+                app:tint="@color/text_primary"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Sidebar -->
+    <LinearLayout
+        android:id="@+id/sidebar"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/menuContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingHorizontal="5dp"
+            android:layout_marginTop="16dp">
+
+            <!-- Inicio -->
+            <LinearLayout
+                android:id="@+id/menuInicio"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_inicio"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuInicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Início"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Ao Vivo -->
+            <LinearLayout
+                android:id="@+id/menuAoVivo"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_ao_vivo"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuAoVivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ao Vivo"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Filmes -->
+            <LinearLayout
+                android:id="@+id/menuFilmes"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_filmes"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuFilmes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filmes"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Series -->
+            <LinearLayout
+                android:id="@+id/menuSeries"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_series"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuSeries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Séries"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Favoritos -->
+            <LinearLayout
+                android:id="@+id/menuFavoritos"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_favoritos"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuFavoritos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favoritos"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Listas -->
+            <LinearLayout
+                android:id="@+id/menuListas"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_listas"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuListas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Listas"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Histórico -->
+            <LinearLayout
+                android:id="@+id/menuHistorico"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_historico"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuHistorico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Histórico"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Categorias -->
+            <LinearLayout
+                android:id="@+id/menuCategorias"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_categorias"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuCategorias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Categorias"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Configurações -->
+            <LinearLayout
+                android:id="@+id/menuConfiguracoes"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/ic_menu_configuracoe"
+                android:paddingHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_preferences"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuConfiguracoes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configurações"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Premium Banner -->
+        <LinearLayout
+            android:id="@+id/premiumCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/bg_premium_card"
+            android:padding="16dp"
+            android:layout_margin="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💎"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tvPremiumTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PREMIUM"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvPremiumDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tenha acesso a todos os canais ao vivo!"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Main Content Area (Fragment Container) -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:layout_toEndOf="@id/sidebar" />
+
+</RelativeLayout>
