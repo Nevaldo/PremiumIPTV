@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.google.gson.Gson;
 import com.player.iptv.PlayerVodActivity;
 import com.player.iptv.R;
 import com.player.iptv.adapter.MovieFilterAdapter;
@@ -152,10 +153,10 @@ public class MovieDetailFragment extends Fragment {
                     int index = 0;
                     int count = 0;
                     for (ContentCache item : cached) {
-                        if (count >= 10) break;
+                        if (count >=10) break;
                         try {
                             JSONObject obj = new JSONObject(item.getJson());
-                            Movie movie = new com.google.gson.Gson().fromJson(obj.toString(), Movie.class);
+                            Movie movie = new Gson().fromJson(obj.toString(), Movie.class);
                             if (movie.getStreamId() != streamId) {
                                 if (index == 0 || index >= 9) {
                                     movies.add(movie);

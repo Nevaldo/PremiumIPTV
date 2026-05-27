@@ -87,15 +87,18 @@ public class ContinuarAssistindoAdapter extends RecyclerView.Adapter<RecyclerVie
         } else {
             CardViewHolder h = (CardViewHolder) holder;
             h.txtTitulo.setText(item.getTitulo());
-            h.txtInfo.setText("00:00");
-            h.txtSubtitle.setText(item.getSubtitle());
-            int progress = item.getDuration() > 0 ? (int) (item.getPosition() * 100 / item.getDuration()) : 0;
+            // Exibir subtítulo (ex: T7 • E4) se disponível, senão deixa vazio
+            String sub = item.getSubtitle();
+            h.txtInfo.setText(sub != null && !sub.isEmpty() ? sub : "");
+            int progress = item.getDuration() > 0 ? (int) (item.getPosition() * 100L / item.getDuration()) : 0;
             h.progressBar.setProgress(progress);
+            // Exibir percentual concluído
+            h.txtSubtitle.setText(progress + "% concluído");
             String imageUrl = item.getImageUrl();
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 Glide.with(h.itemView.getContext())
                     .load(imageUrl)
-                    .transform(new CenterCrop(), new RoundedCorners(5))
+                    .transform(new CenterCrop(), new RoundedCorners(6))
                     .placeholder(R.color.bg_surface)
                     .error(R.color.bg_surface)
                     .into(h.imgBanner);

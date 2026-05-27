@@ -133,15 +133,6 @@ public class SeriesDetailFragment extends Fragment {
         btnAssistir.setOnClickListener(v -> {
         });
 
-        if (cover != null && !cover.isEmpty()) {
-            Glide.with(this)
-                    .load(cover)
-                    .transform(new CenterCrop())
-                    .placeholder(R.color.bg_surface)
-                    .error(R.color.bg_surface)
-                    .into(bgImage);
-        }
-
         loadRelatedSeries();
         searchTmdb();
     }
@@ -263,11 +254,18 @@ public class SeriesDetailFragment extends Fragment {
 
         if (details.backdropPath != null) {
             Glide.with(this)
-                    .load("https://image.tmdb.org/t/p/w1280" + details.backdropPath)
-                    .transform(new CenterCrop())
-                    .placeholder(R.color.bg_surface)
-                    .error(R.color.bg_surface)
-                    .into(bgImage);
+                .load("https://image.tmdb.org/t/p/w1280" + details.backdropPath)
+                .transform(new CenterCrop())
+                .placeholder(R.color.bg_surface)
+                .error(R.color.bg_surface)
+                .into(bgImage);
+        }else{
+            Glide.with(this)
+                .load(cover)
+                .transform(new CenterCrop())
+                .placeholder(R.color.bg_surface)
+                .error(R.color.bg_surface)
+                .into(bgImage);
         }
     }
 

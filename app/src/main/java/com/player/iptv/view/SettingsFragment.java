@@ -51,6 +51,8 @@ public class SettingsFragment extends Fragment {
     private Button btnClearCache;
     private Button btnLogout;
 
+    private String tmdbBackdropUrl;
+
     public SettingsFragment() {
         // Required empty public constructor
     }

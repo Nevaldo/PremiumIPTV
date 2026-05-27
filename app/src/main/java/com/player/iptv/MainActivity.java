@@ -6,13 +6,16 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.player.iptv.data.CredentialRepository;
 import com.player.iptv.utils.DialogUtils;
+import com.player.iptv.view.FavoritosFragment;
 import com.player.iptv.view.HistoricoFragment;
 import com.player.iptv.view.HomeFragment;
 import com.player.iptv.view.LiveChannelsFragment;
@@ -50,10 +53,12 @@ public class MainActivity extends AppCompatActivity {
         R.id.menuListas,
         R.id.menuHistorico,
         R.id.menuCategorias,
-        R.id.menuConfiguracoes
+        R.id.menuConfiguracoes,
+        R.id.btnPremiumTop
     };
 
     private final int[] viewsToToggle = {
+        R.id.tvAppTitle,
         R.id.tvMenuInicio,
         R.id.tvMenuAoVivo,
         R.id.tvMenuFilmes,
@@ -136,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = true;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(170);
+        params.width = dpToPx(160);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -145,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 view.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
     private void collapseMenu() {
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = false;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(52);
+        params.width = dpToPx(60);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -179,6 +183,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Navega para um item de menu a partir de outro Fragment (ex: HomeFragment).
+     */
+    public void navigateTo(int menuItemId) {
+        setActiveMenu(menuItemId);
+        loadFragment(createFragmentForMenu(menuItemId));
+    }
+
     private void setActiveMenu(int menuItemId) {
         if (activeMenuItemId != -1) {
             setMenuItemStyle(activeMenuItemId, false);
@@ -192,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         if (item == null) return;
 
         item.setSelected(active);
-        
+
         if (active) {
             item.setBackgroundResource(R.drawable.bg_menu_item_active);
         } else {
@@ -203,11 +215,15 @@ public class MainActivity extends AppCompatActivity {
             View child = item.getChildAt(i);
             if (child instanceof TextView) {
                 TextView tv = (TextView) child;
-                tv.setTextColor(ContextCompat.getColor(this, active ? R.color.text_primary : R.color.text_secondary));
-                tv.setTypeface(null, active ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
-            } else if (child instanceof android.widget.ImageView) {
-                android.widget.ImageView iv = (android.widget.ImageView) child;
-                iv.setColorFilter(ContextCompat.getColor(this, active ? R.color.colorAccent : R.color.text_secondary), android.graphics.PorterDuff.Mode.SRC_IN);
+                tv.setTextColor(ContextCompat.getColor(this,
+                        active ? R.color.text_primary : R.color.text_secondary));
+                tv.setTypeface(null,
+                        active ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+            } else if (child instanceof ImageView) {
+                ImageView iv = (ImageView) child;
+                iv.setColorFilter(ContextCompat.getColor(this,
+                        active ? R.color.colorAccent : R.color.text_secondary),
+                        android.graphics.PorterDuff.Mode.SRC_IN);
             }
         }
     }
@@ -221,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
             return new MoviesFragment();
         } else if (menuItemId == R.id.menuSeries) {
             return new SeriesFragment();
+        } else if (menuItemId == R.id.menuFavoritos) {
+            return new FavoritosFragment();
         } else if (menuItemId == R.id.menuHistorico) {
             return new HistoricoFragment();
         } else if (menuItemId == R.id.menuConfiguracoes) {
@@ -266,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DialogUtils.showExitAppDialog(this, () -> {finishAffinity();});
-       // super.onBackPressed();
+        DialogUtils.showExitAppDialog(this, () -> finishAffinity());
     }
 }

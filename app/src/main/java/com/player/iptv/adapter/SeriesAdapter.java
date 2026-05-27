@@ -80,10 +80,30 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Series series = items.get(position);
+
         if (holder.tvTitle != null) {
             holder.tvTitle.setText(series.getName());
         }
         holder.itemView.setSelected(position == selectedPosition);
+
+        // Badge NOVO — exibir nos 2 primeiros
+        if (holder.tvBadge != null) {
+            holder.tvBadge.setVisibility(position < 2 ? View.VISIBLE : View.GONE);
+        }
+
+        // Info: temporadas e classificação
+        if (holder.tvInfo != null) {
+            String info = buildSeriesInfo(series);
+            holder.tvInfo.setText(info);
+        }
+
+        // Rating
+        if (holder.tvRating != null) {
+            String rating = series.getInfo() != null && series.getInfo().getRating() != null
+                    ? series.getInfo().getRating()
+                    : "9.0";
+            holder.tvRating.setText(rating);
+        }
 
         String imageUrl = series.getCover();
         if (imageUrl == null && series.getInfo() != null) {
@@ -93,7 +113,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         if (holder.ivCover != null) {
             Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
-                .transform(new CenterCrop(), new RoundedCorners(12))
+                .transform(new CenterCrop(), new RoundedCorners(8))
                 .placeholder(R.color.bg_surface)
                 .error(R.color.bg_surface)
                 .into(holder.ivCover);
@@ -115,6 +135,16 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         });
     }
 
+    private String buildSeriesInfo(Series series) {
+        StringBuilder sb = new StringBuilder();
+        if (series.getInfo() != null && series.getInfo().getReleaseDate() != null) {
+            String year = series.getInfo().getReleaseDate();
+            if (year.length() >= 4) year = year.substring(0, 4);
+            sb.append(year);
+        }
+        return sb.toString();
+    }
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -123,6 +153,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView ivCover;
         final TextView tvTitle;
+        final TextView tvBadge;
+        final TextView tvInfo;
+        final TextView tvRating;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -138,6 +171,10 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
                 tempTitle = itemView.findViewById(R.id.tvSeriesTitle);
             }
             tvTitle = tempTitle;
+
+            tvBadge  = itemView.findViewById(R.id.tvSeriesBadge);
+            tvInfo   = itemView.findViewById(R.id.tvSeriesInfo);
+            tvRating = itemView.findViewById(R.id.tvSeriesRating);
 
             itemView.setFocusable(true);
             itemView.setClickable(true);

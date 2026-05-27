@@ -31,6 +31,10 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import com.bumptech.glide.Glide;
+import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 public class PlayerVodActivity extends AppCompatActivity {
 
@@ -44,13 +48,19 @@ public class PlayerVodActivity extends AppCompatActivity {
     private PlayerView playerView;
     private ExoPlayer player;
     private View controlsContainer;
-    private ImageView btnPlayPause;
+    private View btnPlayPause;
+    private ImageView ivPlayPauseCentral;
     private ImageView btnPlay;
     private ImageView btnVolume;
     private ImageView btnFullscreen;
     private SeekBar seekBar;
+    private SeekBar volumeSeekBar;
     private TextView tvCurrentTime;
     private TextView tvTotalTime;
+    private TextView tvSystemTime;
+    private TextView tvSystemDate;
+    private LinearLayout chaptersContainer;
+    private int activeChapterIndex = 0;
 
     private boolean controlsVisible = true;
     private boolean isMuted = false;
@@ -73,6 +83,18 @@ public class PlayerVodActivity extends AppCompatActivity {
         }
     };
 
+    private final Runnable clockRunnable = new Runnable() {
+        @Override
+        public void run() {
+            java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+            java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault());
+            java.util.Date now = new java.util.Date();
+            if (tvSystemTime != null) tvSystemTime.setText(timeFormat.format(now));
+            if (tvSystemDate != null) tvSystemDate.setText(dateFormat.format(now));
+            handler.postDelayed(this, 10000);
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,15 +112,23 @@ public class PlayerVodActivity extends AppCompatActivity {
         playerView = findViewById(R.id.playerView);
         controlsContainer = findViewById(R.id.controlsContainer);
         btnPlayPause = findViewById(R.id.btnPlayPause);
+        ivPlayPauseCentral = findViewById(R.id.ivPlayPauseCentral);
         btnPlay = findViewById(R.id.btnPlay);
         btnVolume = findViewById(R.id.btnVolume);
         btnFullscreen = findViewById(R.id.btnFullscreen);
         seekBar = findViewById(R.id.seekBar);
+        volumeSeekBar = findViewById(R.id.volumeSeekBar);
         tvCurrentTime = findViewById(R.id.tvCurrentTime);
         tvTotalTime = findViewById(R.id.tvTotalTime);
+        tvSystemTime = findViewById(R.id.tvSystemTime);
+        tvSystemDate = findViewById(R.id.tvSystemDate);
+        chaptersContainer = findViewById(R.id.chaptersContainer);
 
         TextView tvTitle = findViewById(R.id.tvTitle);
-        TextView tvSubtitle = findViewById(R.id.tvSubtitle);
+        TextView tvYear = findViewById(R.id.tvYear);
+        TextView tvDuration = findViewById(R.id.tvDuration);
+        TextView tvGenres = findViewById(R.id.tvGenres);
+        TextView tvSynopsis = findViewById(R.id.tvSynopsis);
 
         Intent intent = getIntent();
         currentTitle = intent.getStringExtra(EXTRA_TITLE);
@@ -111,13 +141,21 @@ public class PlayerVodActivity extends AppCompatActivity {
         if (currentTitle != null) {
             tvTitle.setText(currentTitle);
         }
-        if (currentSubtitle != null) {
-            tvSubtitle.setText(currentSubtitle);
+        if (currentSubtitle != null && !currentSubtitle.trim().isEmpty()) {
+            tvGenres.setText(currentSubtitle);
+            tvSynopsis.setText("Assistindo a " + currentTitle + " (" + currentSubtitle + "). " +
+                "Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família.");
+        } else {
+            tvSynopsis.setText("Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Diante de uma escolha entre o amor de sua vida e o destino do universo, ele tenta evitar um futuro terrível.");
         }
+
+        handler.post(clockRunnable);
 
         setupPlayer();
         setupControls();
         loadHistory();
+        setupChapters();
+        setupNextInQueue();
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -208,6 +246,16 @@ public class PlayerVodActivity extends AppCompatActivity {
                 seekBar.setProgress((int) pos);
                 tvCurrentTime.setText(formatTime(pos));
 
+                int newChapter = 0;
+                if (pos >= 4215000) newChapter = 3;
+                else if (pos >= 2850000) newChapter = 2;
+                else if (pos >= 1425000) newChapter = 1;
+
+                if (newChapter != activeChapterIndex) {
+                    activeChapterIndex = newChapter;
+                    updateChaptersUI();
+                }
+
                 long now = System.currentTimeMillis();
                 if (now - lastSave > 5000) {
                     lastSave = now;
@@ -273,17 +321,47 @@ public class PlayerVodActivity extends AppCompatActivity {
         controlsContainer.setOnClickListener(v -> toggleControls());
 
         btnPlayPause.setOnClickListener(v -> togglePlayPause());
-
         btnPlay.setOnClickListener(v -> togglePlayPause());
+
+        View btnRewind10 = findViewById(R.id.btnRewind10);
+        View btnForward10 = findViewById(R.id.btnForward10);
+        if (btnRewind10 != null) btnRewind10.setOnClickListener(v -> seekRelative(-10000));
+        if (btnForward10 != null) btnForward10.setOnClickListener(v -> seekRelative(10000));
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) btnBack.setOnClickListener(v -> saveAndExit());
+        
+        View btnPremium = findViewById(R.id.btnPremium);
+        if (btnPremium != null) btnPremium.setOnClickListener(v -> showMockToast("Premium Ativo!"));
+
+        setupMockListeners();
+
+        if (volumeSeekBar != null) {
+            volumeSeekBar.setProgress(80);
+            if (player != null) player.setVolume(0.8f);
+            volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser && player != null) {
+                        player.setVolume(progress / 100f);
+                        isMuted = (progress == 0);
+                        btnVolume.setColorFilter(getColor(isMuted ? R.color.text_secondary : R.color.text_primary));
+                    }
+                }
+                @Override public void onStartTrackingTouch(SeekBar seekBar) { handler.removeCallbacks(hideRunnable); }
+                @Override public void onStopTrackingTouch(SeekBar seekBar) { resetAutoHide(); }
+            });
+        }
 
         btnVolume.setOnClickListener(v -> {
             isMuted = !isMuted;
-            player.setVolume(isMuted ? 0f : 1f);
+            if (player != null) player.setVolume(isMuted ? 0f : 0.8f);
+            if (volumeSeekBar != null) volumeSeekBar.setProgress(isMuted ? 0 : 80);
             btnVolume.setColorFilter(getColor(isMuted ? R.color.text_secondary : R.color.text_primary));
         });
 
         btnFullscreen.setOnClickListener(v -> {
-            finish();
+            saveAndExit();
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -333,7 +411,7 @@ public class PlayerVodActivity extends AppCompatActivity {
 
     private void updatePlayButtons(boolean isPlaying) {
         int icon = isPlaying ? R.drawable.ic_pause_big : R.drawable.ic_play;
-        btnPlayPause.setImageResource(icon);
+        if (ivPlayPauseCentral != null) ivPlayPauseCentral.setImageResource(icon);
         btnPlay.setImageResource(isPlaying ? R.drawable.ic_pause_big : R.drawable.ic_play);
     }
 
@@ -405,5 +483,149 @@ public class PlayerVodActivity extends AppCompatActivity {
         }).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(success -> finish(), throwable -> finish()));
+    }
+
+    private void seekRelative(long ms) {
+        if (player == null) return;
+        long target = player.getCurrentPosition() + ms;
+        if (target < 0) target = 0;
+        if (target > player.getDuration()) target = player.getDuration();
+        player.seekTo(target);
+        seekBar.setProgress((int) target);
+        tvCurrentTime.setText(formatTime(target));
+        resetAutoHide();
+    }
+
+    private void setupNextInQueue() {
+        ImageView ivNextPoster = findViewById(R.id.ivNextPoster);
+        TextView tvNextTitle = findViewById(R.id.tvNextTitle);
+        TextView tvNextDuration = findViewById(R.id.tvNextDuration);
+        
+        if (tvNextTitle != null) tvNextTitle.setText("Mad Max: Estrada da Fúria");
+        if (tvNextDuration != null) tvNextDuration.setText("2h 0min");
+        
+        if (ivNextPoster != null && currentImageUrl != null && !currentImageUrl.isEmpty()) {
+            Glide.with(this)
+                .load(currentImageUrl)
+                .transform(new com.bumptech.glide.load.resource.bitmap.CenterCrop())
+                .into(ivNextPoster);
+        }
+    }
+
+    private void setupChapters() {
+        if (chaptersContainer == null) return;
+        chaptersContainer.removeAllViews();
+        
+        String[] chapterTitles = {"1. Início", "2. A Chegada", "3. Aliança", "4. A Batalha"};
+        long[] chapterTimes = {0, 1425000, 2850000, 4215000};
+        
+        for (int i = 0; i < chapterTitles.length; i++) {
+            final int index = i;
+            final long timeMs = chapterTimes[i];
+            final String title = chapterTitles[i];
+            
+            View item = getLayoutInflater().inflate(R.layout.item_chapter, chaptersContainer, false);
+            TextView tvTitle = item.findViewById(R.id.tvChapterTitle);
+            TextView tvTime = item.findViewById(R.id.tvChapterTime);
+            ImageView ivThumb = item.findViewById(R.id.ivChapterThumb);
+            View cardFrame = item.findViewById(R.id.chapterCardFrame);
+            
+            tvTitle.setText(title);
+            tvTime.setText(formatTime(timeMs));
+            
+            if (currentImageUrl != null && !currentImageUrl.isEmpty()) {
+                Glide.with(this)
+                    .load(currentImageUrl)
+                    .transform(new com.bumptech.glide.load.resource.bitmap.CenterCrop())
+                    .into(ivThumb);
+            }
+            
+            if (i == activeChapterIndex) {
+                cardFrame.setBackgroundResource(R.drawable.bg_chapter_card);
+                tvTitle.setTextColor(getColor(R.color.colorAccent));
+            } else {
+                cardFrame.setBackgroundResource(android.R.color.transparent);
+                tvTitle.setTextColor(getColor(R.color.text_secondary));
+            }
+            
+            item.setOnClickListener(v -> {
+                if (player != null) {
+                    player.seekTo(timeMs);
+                    player.play();
+                    activeChapterIndex = index;
+                    updateChaptersUI();
+                }
+            });
+            
+            chaptersContainer.addView(item);
+        }
+    }
+
+    private void updateChaptersUI() {
+        if (chaptersContainer == null) return;
+        for (int i = 0; i < chaptersContainer.getChildCount(); i++) {
+            View item = chaptersContainer.getChildAt(i);
+            TextView tvTitle = item.findViewById(R.id.tvChapterTitle);
+            View cardFrame = item.findViewById(R.id.chapterCardFrame);
+            if (i == activeChapterIndex) {
+                cardFrame.setBackgroundResource(R.drawable.bg_chapter_card);
+                tvTitle.setTextColor(getColor(R.color.colorAccent));
+            } else {
+                cardFrame.setBackgroundResource(android.R.color.transparent);
+                tvTitle.setTextColor(getColor(R.color.text_secondary));
+            }
+        }
+    }
+
+    private void setupMockListeners() {
+        View btnSearch = findViewById(R.id.btnSearch);
+        if (btnSearch != null) btnSearch.setOnClickListener(v -> showMockToast("Busca integrada em breve..."));
+
+        View btnSettings = findViewById(R.id.btnSettings);
+        if (btnSettings != null) btnSettings.setOnClickListener(v -> showMockToast("Ajustes de reprodução e vídeo"));
+
+        View btnMinhaLista = findViewById(R.id.btnMinhaLista);
+        if (btnMinhaLista != null) btnMinhaLista.setOnClickListener(v -> showMockToast("Adicionado à sua lista"));
+
+        View btnFavorito = findViewById(R.id.btnFavorito);
+        if (btnFavorito != null) btnFavorito.setOnClickListener(v -> showMockToast("Adicionado aos favoritos"));
+
+        View btnCompartilhar = findViewById(R.id.btnCompartilhar);
+        if (btnCompartilhar != null) btnCompartilhar.setOnClickListener(v -> showMockToast("Compartilhando conteúdo"));
+
+        View btnMoreInfo = findViewById(R.id.btnMoreInfo);
+        if (btnMoreInfo != null) btnMoreInfo.setOnClickListener(v -> showMockToast("Título: " + currentTitle));
+
+        View btnLegendas = findViewById(R.id.btnLegendas);
+        if (btnLegendas != null) btnLegendas.setOnClickListener(v -> showMockToast("Seleção de Legenda (Padrão: Desativado)"));
+
+        View btnLanguage = findViewById(R.id.btnLanguage);
+        if (btnLanguage != null) btnLanguage.setOnClickListener(v -> showMockToast("Faixa de áudio atual: PT-BR"));
+
+        View btnQualidade = findViewById(R.id.btnQualidade);
+        if (btnQualidade != null) btnQualidade.setOnClickListener(v -> showMockToast("Ajuste automático de bitrate"));
+
+        View btnPrev = findViewById(R.id.btnPrev);
+        if (btnPrev != null) btnPrev.setOnClickListener(v -> showMockToast("Reiniciando vídeo..."));
+
+        View btnNext = findViewById(R.id.btnNext);
+        if (btnNext != null) btnNext.setOnClickListener(v -> showMockToast("Próximo vídeo da fila"));
+
+        View btnNextChapter = findViewById(R.id.btnNextChapter);
+        if (btnNextChapter != null) {
+            btnNextChapter.setOnClickListener(v -> {
+                int nextIndex = (activeChapterIndex + 1) % 4;
+                long[] chapterTimes = {0, 1425000, 2850000, 4215000};
+                if (player != null) {
+                    player.seekTo(chapterTimes[nextIndex]);
+                    activeChapterIndex = nextIndex;
+                    updateChaptersUI();
+                }
+            });
+        }
+    }
+
+    private void showMockToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

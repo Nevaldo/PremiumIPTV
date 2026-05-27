@@ -6,6 +6,7 @@
     
     <!-- Backgrounds -->
     <color name="bg_main">#08080C</color>
+    <color name="bg_sidebar">#0D0D18</color>
     <color name="bg_surface">#12121A</color>
     <color name="bg_surface_light">#1A1A24</color>
     <color name="bg_menu_active">#1E0F3D</color>
@@ -22,4 +23,13 @@
     <!-- Status -->
     <color name="live_red">#FF0033</color>
     <color name="white">#FFFFFF</color>
+    <!-- Login specific colors -->
+    <color name="login_bg_left">#050508</color>
+    <color name="login_btn_purple">#5614F5</color>
+    <color name="login_input_bg">#0D0D14</color>
+    <color name="login_input_stroke">#1C1C28</color>
+    <color name="login_social_bg">#08080C</color>
+    <color name="login_social_stroke">#1A1A24</color>
+    <color name="login_text_purple">#5614F5</color>
+
 </resources>

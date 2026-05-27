@@ -12,22 +12,24 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <!-- PARTE 1: Conteúdo principal (65%) -->
+        <!-- =====================================================
+             PARTE 1: Conteúdo principal (~73%)
+             ===================================================== -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="7.3"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:paddingEnd="12dp">
+            android:padding="14dp"
+            android:paddingEnd="10dp">
 
-            <!-- Banner Destaque -->
+            <!-- ======= BANNER HERO DESTAQUE ======= -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/bannerCard"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="240dp"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="8dp"
                 android:focusable="true"
                 android:clickable="true"
                 android:foreground="@drawable/bg_card_border">
@@ -36,20 +38,74 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <!-- Imagem de fundo do banner -->
                     <ImageView
                         android:id="@+id/bannerImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop" />
 
+                    <!-- Gradiente sobre a imagem -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_fade_bottom" />
+
+                    <!-- Badge "EM ALTA" -->
+                    <TextView
+                        android:id="@+id/bannerBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="14dp"
+                        android:text="EM ALTA"
+                        android:textColor="@color/text_primary"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_badge_em_alta"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp" />
+
+                    <!-- Seta Esquerda -->
+                    <ImageView
+                        android:id="@+id/bannerPrev"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="8dp"
+                        android:src="@android:drawable/ic_media_previous"
+                        android:background="#55000000"
+                        android:padding="6dp"
+                        android:focusable="true"
+                        android:clickable="true" />
+
+                    <!-- Seta Direita -->
+                    <ImageView
+                        android:id="@+id/bannerNext"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:src="@android:drawable/ic_media_next"
+                        android:background="#55000000"
+                        android:padding="6dp"
+                        android:focusable="true"
+                        android:clickable="true" />
+
+                    <!-- Info do banner (título, subtítulo, botões) -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:background="#AA000000"
+                        android:background="#BB000000"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="14dp">
 
+                        <!-- Título -->
                         <TextView
                             android:id="@+id/bannerTitle"
                             android:layout_width="wrap_content"
@@ -59,14 +115,68 @@
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
+                        <!-- Metadados: ano • duração • classificação -->
                         <TextView
                             android:id="@+id/bannerSubtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/text_secondary"
-                            android:textSize="13sp"
-                            android:layout_marginTop="4dp" />
+                            android:textSize="11sp"
+                            android:layout_marginTop="3dp" />
+
+                        <!-- Sinopse -->
+                        <TextView
+                            android:id="@+id/bannerDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="#BBBBBB"
+                            android:textSize="11sp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:layout_marginTop="6dp" />
+
+                        <!-- Botões de ação -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp">
+
+                            <!-- Assistir agora -->
+                            <Button
+                                android:id="@+id/btnBannerPlay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dp"
+                                android:text="▶  Assistir agora"
+                                android:textColor="@color/text_primary"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:background="@drawable/bg_menu_item_active"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="14dp"
+                                android:focusable="true"
+                                android:clickable="true" />
+
+                            <!-- Mais informações -->
+                            <Button
+                                android:id="@+id/btnBannerInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dp"
+                                android:layout_marginStart="10dp"
+                                android:text="ℹ  Mais informações"
+                                android:textColor="@color/text_primary"
+                                android:textSize="11sp"
+                                android:background="@drawable/bg_btn_outline"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="14dp"
+                                android:focusable="true"
+                                android:clickable="true" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -74,16 +184,35 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Filmes em Destaque -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- ======= FILMES EM DESTAQUE ======= -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Filmes em Destaque"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Filmes em Destaque"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnVerTodosFilmes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver todos ›"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFeaturedMovies"
@@ -92,18 +221,37 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:clipToPadding="false"
-                android:paddingEnd="24dp" />
+                android:paddingEnd="16dp" />
 
-            <!-- Séries em Destaque -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- ======= SÉRIES POPULARES ======= -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Séries em Destaque"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Séries Populares"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnVerTodosSeries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver todas ›"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFeaturedSeries"
@@ -112,28 +260,30 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:clipToPadding="false"
-                android:paddingEnd="24dp" />
+                android:paddingEnd="16dp" />
 
         </LinearLayout>
 
-        <!-- PARTE 2: Sidebar direita (35%) -->
+        <!-- =====================================================
+             PARTE 2: Sidebar direita (~27%)
+             ===================================================== -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2.7"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:paddingStart="12dp">
+            android:padding="14dp"
+            android:paddingStart="10dp">
 
-            <!-- Continuar Assistindo -->
+            <!-- ======= CONTINUAR ASSISTINDO ======= -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continuar Assistindo"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
+                android:text="Continue Assistindo"
+                android:textColor="@color/text_accent"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="10dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvContinueWatching"
@@ -143,16 +293,16 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:nestedScrollingEnabled="false" />
 
-            <!-- Botão Histórico -->
+            <!-- Ver tudo -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnHistorico"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
                 android:focusable="true"
                 android:clickable="true"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="0dp"
+                app:cardCornerRadius="4dp"
                 android:foreground="@drawable/bg_card_border">
 
                 <LinearLayout
@@ -164,66 +314,256 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Histórico"
+                        android:text="Ver tudo"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" →"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp"
-                        android:layout_marginStart="8dp" />
+                        android:text=" ›"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:layout_marginStart="4dp" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Categorias em Alta -->
+            <!-- ======= CATEGORIAS EM ALTA ======= -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categorias em Alta"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
+                android:text="Categorias em alta"
+                android:textColor="@color/text_accent"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp" />
 
-            <HorizontalScrollView
+            <!-- Grade de categorias 3x2 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginBottom="12dp">
+                android:orientation="vertical">
 
+                <!-- Linha 1 -->
                 <LinearLayout
-                    android:id="@+id/categoriesContainer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp">
 
-            <!-- Card Lançamento -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catAcao"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎬"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ação"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catDrama"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎭"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Drama"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catComedia"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="😄"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Comédia"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+                <!-- Linha 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catTerror"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="👻"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Terror"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catAnimacao"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎨"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Animação"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/catDocumentario"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:clickable="true"
+                        app:cardBackgroundColor="@color/bg_surface"
+                        app:cardCornerRadius="6dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🎞"
+                                android:textSize="12sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Documentário"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:layout_marginStart="4dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ======= LANÇAMENTOS ======= -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lançamentos"
                 android:textColor="@color/text_accent"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardDestaque"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="170dp"
                 android:focusable="true"
                 android:clickable="true"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="10dp"
                 android:foreground="@drawable/bg_card_border">
 
                 <RelativeLayout
@@ -236,13 +576,18 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_fade_bottom" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:background="#AA000000"
+                        android:background="#99000000"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/destaqueTitle"
@@ -250,7 +595,7 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/text_primary"
-                            android:textSize="14sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -259,10 +604,34 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/text_secondary"
-                            android:textSize="11sp"
+                            android:textSize="10sp"
                             android:layout_marginTop="2dp" />
+
+                        <!-- Botão Assistir mini -->
+                        <LinearLayout
+                            android:id="@+id/btnDestaquePlay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="28dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_menu_item_active"
+                            android:paddingHorizontal="10dp"
+                            android:focusable="true"
+                            android:clickable="true">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="▶  Assistir agora"
+                                android:textColor="@color/text_primary"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
                     </LinearLayout>
+
                 </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

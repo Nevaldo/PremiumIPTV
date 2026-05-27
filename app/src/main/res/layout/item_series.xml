@@ -1,47 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="110dp"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_marginEnd="6dp"
     android:focusable="true"
     android:clickable="true"
     app:cardBackgroundColor="@color/bg_surface"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="6dp"
+    app:cardElevation="3dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivSeriesCover"
+        <!-- Poster container -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:importantForAccessibility="no" />
+            android:layout_height="165dp">
 
+            <ImageView
+                android:id="@+id/ivSeriesCover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:importantForAccessibility="no" />
+
+            <!-- Badge NOVO -->
+            <TextView
+                android:id="@+id/tvSeriesBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="6dp"
+                android:text="NOVO"
+                android:textColor="@color/text_primary"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_menu_item_active"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="2dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <!-- Info abaixo do poster -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#AA08080C"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="6dp">
 
             <TextView
                 android:id="@+id/tvSeriesTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
+            <!-- Linha de info: temporadas • classificação -->
+            <TextView
+                android:id="@+id/tvSeriesInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="9sp"
+                android:visibility="gone"
+                android:layout_marginTop="2dp" />
+
+            <!-- Rating -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="3dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/tvSeriesRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="2dp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
