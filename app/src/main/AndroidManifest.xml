@@ -10,24 +10,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:windowSoftInputMode="adjustResize"
+        android:theme="@style/Theme.IPTV"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.IPTV">
+        android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".PlayerVodActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.IPTV">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.IPTV" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="false"

@@ -1,5 +1,6 @@
 package com.player.iptv.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.player.iptv.PlayerVodActivity;
 import com.player.iptv.R;
+import com.player.iptv.adapter.ContinuarAssistindoAdapter;
 import com.player.iptv.adapter.MovieAdapter;
 import com.player.iptv.adapter.SeriesAdapter;
+import com.player.iptv.data.AppDatabase;
 import com.player.iptv.model.Movie;
 import com.player.iptv.model.Series;
 import com.player.iptv.viewmodel.HomeViewModel;
 
 import java.util.List;
+
 
 public class HomeFragment extends Fragment {
 
@@ -50,6 +55,7 @@ public class HomeFragment extends Fragment {
 
     private MovieAdapter featuredMoviesAdapter;
     private SeriesAdapter featuredSeriesAdapter;
+    private ContinuarAssistindoAdapter continueWatchingAdapter;
 
     public HomeFragment() {}
 
@@ -80,20 +86,42 @@ public class HomeFragment extends Fragment {
 
         setupAdapters();
         setupViewModel();
+        loadContinueWatching();
     }
 
     private void setupAdapters() {
-        featuredMoviesAdapter = new MovieAdapter();
-        featuredSeriesAdapter = new SeriesAdapter(R.layout.item_series_new);
+        featuredMoviesAdapter = new MovieAdapter(false);
+        featuredSeriesAdapter = new SeriesAdapter(5);
+        continueWatchingAdapter = new ContinuarAssistindoAdapter(ContinuarAssistindoAdapter.TYPE_LIST);
 
         rvFeaturedMovies.setAdapter(featuredMoviesAdapter);
         rvFeaturedSeries.setAdapter(featuredSeriesAdapter);
+        rvContinueWatching.setAdapter(continueWatchingAdapter);
 
-        featuredMoviesAdapter.setOnItemClickListener((movie, pos) ->
-            Toast.makeText(getContext(), movie.getName(), Toast.LENGTH_SHORT).show());
+        featuredMoviesAdapter.setOnItemClickListener((movie, pos) -> openMovieDetail(movie));
 
         featuredSeriesAdapter.setOnItemClickListener((series, pos) ->
             Toast.makeText(getContext(), series.getName(), Toast.LENGTH_SHORT).show());
+
+        continueWatchingAdapter.setOnItemClickListener((item, pos) -> {
+            Intent intent = new Intent(getContext(), PlayerVodActivity.class);
+            intent.putExtra(PlayerVodActivity.EXTRA_TITLE, item.getTitulo());
+            intent.putExtra(PlayerVodActivity.EXTRA_STREAM_ID, item.getStreamId());
+            intent.putExtra(PlayerVodActivity.EXTRA_CONTAINER_EXT, item.getContainerExt());
+            intent.putExtra(PlayerVodActivity.EXTRA_SUBTITLE, item.getInfo());
+            intent.putExtra(PlayerVodActivity.EXTRA_IMAGE_URL, item.getImageUrl());
+            startActivity(intent);
+        });
+    }
+
+    private void loadContinueWatching() {
+        AppDatabase.getInstance(requireContext()).historicoDao().getContinueWatching().observe(getViewLifecycleOwner(), list -> {
+            if (list != null && list.size() > 3) {
+                continueWatchingAdapter.setItems(list.subList(0, 3));
+            } else {
+                continueWatchingAdapter.setItems(list);
+            }
+        });
     }
 
     private void setupViewModel() {
@@ -161,9 +189,8 @@ public class HomeFragment extends Fragment {
             tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary));
             tv.setBackgroundResource(R.drawable.bg_menu_item);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 0, dpToPx(8));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, dpToPx(12), 0);
             tv.setLayoutParams(params);
             tv.setPadding(dpToPx(16), dpToPx(8), dpToPx(16), dpToPx(8));
             tv.setFocusable(true);
@@ -171,6 +198,27 @@ public class HomeFragment extends Fragment {
 
             categoriesContainer.addView(tv);
         }
+    }
+
+    private void openMovieDetail(Movie movie) {
+        String title = movie.getName() != null ? movie.getName() : movie.getTitle();
+        String imageUrl = movie.getStreamIcon();
+        if (imageUrl == null && movie.getInfo() != null) {
+            imageUrl = movie.getInfo().getMovieImage();
+        }
+        String subtitle = movie.getInfo() != null && movie.getInfo().getReleaseDate() != null ? movie.getInfo().getReleaseDate() : "";
+        String directSource = movie.getDirectSource();
+
+        MovieDetailFragment detail = MovieDetailFragment.newInstance(
+                movie.getStreamId(), title, directSource,
+                movie.getContainerExtension(), imageUrl, subtitle,
+                movie.getCategoryId()
+        );
+
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, detail)
+                .addToBackStack(null)
+                .commit();
     }
 
     private int dpToPx(int dp) {

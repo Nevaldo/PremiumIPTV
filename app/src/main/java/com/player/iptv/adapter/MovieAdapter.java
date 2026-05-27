@@ -20,12 +20,26 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
+    public static final int TYPE_NORMAL = 0;
+    public static final int TYPE_SMALL = 1;
+
     private final List<Movie> items = new ArrayList<>();
     private OnItemClickListener listener;
     private int selectedPosition = -1;
+    private int viewType = TYPE_NORMAL;
 
     public interface OnItemClickListener {
         void onItemClick(Movie movie, int position);
+    }
+
+    public MovieAdapter() {}
+
+    public MovieAdapter(boolean useSmallLayout) {
+        this.viewType = useSmallLayout ? TYPE_SMALL : TYPE_NORMAL;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -40,11 +54,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return viewType;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_movie, parent, false);
+        int layout = viewType == TYPE_SMALL ? R.layout.item_movie_small : R.layout.item_movie;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 

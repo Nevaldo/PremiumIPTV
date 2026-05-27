@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.player.iptv'
-    compileSdk 34
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.iptv"
         minSdk 24
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
     }
@@ -37,6 +37,7 @@ dependencies {
     
     // Room
     implementation 'androidx.room:room-runtime:2.5.2'
+    implementation libs.androidx.activity
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
     implementation 'androidx.room:room-rxjava2:2.5.2'
     
@@ -58,9 +59,12 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
 
-    // ExoPlayer
+    // ExoPlayer (Media3)
     implementation 'androidx.media3:media3-exoplayer:1.2.0'
     implementation 'androidx.media3:media3-exoplayer-hls:1.2.0'
+    implementation 'androidx.media3:media3-exoplayer-dash:1.2.0'
+    implementation 'androidx.media3:media3-exoplayer-rtsp:1.2.0'
+    implementation 'androidx.media3:media3-datasource:1.2.0'
     implementation 'androidx.media3:media3-ui:1.2.0'
 
     // WorkManager

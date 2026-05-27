@@ -81,4 +81,5 @@ public class Movie {
     public String getRating() { return rating; }
     public String getRating5based() { return rating5based; }
     public MovieInfo getInfo() { return info; }
+    public String getDirectSource() { return directSource; }
 }

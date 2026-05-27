@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp">
+
+        <!-- TITULO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Histórico"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <!-- FILTROS -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnFiltroTudo"
+                android:layout_width="90dp"
+                android:layout_height="42dp"
+                android:text="Tudo"
+                android:textColor="#FFFFFF"
+                android:focusable="true"
+                android:clickable="true"
+                android:background="@drawable/bg_filter_selected"/>
+
+            <Button
+                android:id="@+id/btnFiltroFilmes"
+                android:layout_width="90dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="12dp"
+                android:text="Filmes"
+                android:textColor="#BBBBBB"
+                android:background="@drawable/bg_filter"/>
+
+            <Button
+                android:id="@+id/btnFiltroSeries"
+                android:layout_width="90dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="12dp"
+                android:text="Séries"
+                android:textColor="#BBBBBB"
+                android:background="@drawable/bg_filter"/>
+        </LinearLayout>
+
+        <!-- CONTINUAR -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continuar Assistindo"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="34dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContinuar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"/>
+
+        <!-- RECENTES -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assistidos Recentemente"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="34dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecentes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"/>
+
+        <!-- BOTAO -->
+        <Button
+            android:id="@+id/btnCarregarMais"
+            android:layout_width="180dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="28dp"
+            android:text="Carregar mais"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/bg_load_more"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

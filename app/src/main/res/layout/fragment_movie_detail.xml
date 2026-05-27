@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/bg_main">
+    android:background="@color/bg_main"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Background Image Simulation -->
-        <View
+        <!-- Background Image -->
+        <ImageView
             android:id="@+id/bgImage"
             android:layout_width="match_parent"
             android:layout_height="600dp"
-            android:background="#4A2B15" 
+            android:background="#4A2B15"
+            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Gradient Overlay to blend with background -->
@@ -25,34 +26,21 @@
             android:background="@drawable/bg_fade_bottom"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Top Left "Voltar" -->
-        <LinearLayout
-            android:id="@+id/btnVoltar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_margin="24dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="&lt; " android:textColor="@color/text_secondary" android:textSize="14sp"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VOLTAR" android:textColor="@color/text_secondary" android:textSize="12sp" android:textStyle="bold"/>
-        </LinearLayout>
 
         <!-- Movie Details Section -->
         <LinearLayout
             android:id="@+id/movieInfoContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintTop_toBottomOf="@id/btnVoltar"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5">
 
             <TextView
+                android:id="@+id/txtGenres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AÇÃO • AVENTURA • FICÇÃO CIENTÍFICA"
@@ -61,83 +49,152 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Duna: Parte Dois"
                 android:textColor="@color/text_primary"
                 android:textSize="36sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:textStyle="bold" />
 
             <!-- Tags -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
-                
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2024" android:textColor="@color/text_secondary" android:textSize="12sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 14 " android:textColor="@color/text_primary" android:background="#333333" android:textSize="10sp" android:layout_marginStart="8dp" android:paddingHorizontal="4dp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 2h 46min " android:textColor="@color/text_secondary" android:textSize="12sp" android:layout_marginStart="8dp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 4K " android:textColor="#FFB74D" android:background="#332A1C" android:textSize="10sp" android:layout_marginStart="8dp" android:paddingHorizontal="4dp" android:textStyle="bold"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2024"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/txtAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#333333"
+                    android:paddingHorizontal="4dp"
+                    android:text=" 14 "
+                    android:textColor="@color/text_primary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text=" 2h 46min "
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#332A1C"
+                    android:paddingHorizontal="4dp"
+                    android:text=" 4K "
+                    android:textColor="#FFB74D"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Synopsis -->
             <TextView
+                android:id="@+id/txtSynopsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:lineSpacingExtra="4dp"
                 android:text="Paul Atreides se une a Chani e aos Fremen enquanto busca vingança contra os conspiradores que destruíram sua família. Diante de uma escolha entre o amor de sua vida e o destino do universo, ele tenta evitar um futuro terrível que só ele pode prever."
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginTop="24dp" />
+                android:textSize="14sp" />
 
             <!-- Action Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="24dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="24dp">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnAssistir"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="▶ ASSISTIR"
                     android:backgroundTint="@color/colorAccent"
+                    android:paddingHorizontal="32dp"
+                    android:text="▶ ASSISTIR"
                     android:textColor="@color/text_primary"
-                    android:textStyle="bold"
-                    android:paddingHorizontal="32dp"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btnMinhaLista"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:text="+ MINHA LISTA"
-                    android:backgroundTint="#00000000"
-                    android:background="@drawable/bg_btn_outline"
-                    android:textColor="@color/text_primary"
                     android:layout_marginStart="16dp"
-                    android:paddingHorizontal="24dp"/>
+                    android:background="@drawable/bg_btn_outline"
+                    android:backgroundTint="#00000000"
+                    android:paddingHorizontal="24dp"
+                    android:text="+ MINHA LISTA"
+                    android:textColor="@color/text_primary" />
             </LinearLayout>
-            
+
             <!-- Tabs -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="32dp"
                 android:paddingBottom="8dp">
-                
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="INFORMAÇÕES" android:textColor="@color/colorAccent" android:textStyle="bold" android:layout_marginEnd="24dp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ELENCO" android:textColor="@color/text_secondary" android:layout_marginEnd="24dp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SIMILARES" android:textColor="@color/text_secondary" android:layout_marginEnd="24dp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="EXTRAS" android:textColor="@color/text_secondary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="INFORMAÇÕES"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="ELENCO"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:text="SIMILARES"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EXTRAS"
+                    android:textColor="@color/text_secondary" />
+
             </LinearLayout>
-            <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#222233"/>
-            <View android:layout_width="100dp" android:layout_height="2dp" android:background="@color/colorAccent" android:layout_marginTop="-2dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#222233" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="-2dp"
+                android:background="@color/colorAccent" />
 
         </LinearLayout>
 
@@ -146,22 +203,34 @@
             android:id="@+id/infoBoxesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/movieInfoContainer">
 
             <!-- Technical Info Box -->
             <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="12dp"
-                android:layout_marginEnd="16dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Informações Técnicas simuladas..." android:textColor="@color/text_secondary"/>
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Informações Técnicas simuladas..."
+                        android:textColor="@color/text_secondary" />
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <!-- Trailer Box -->
@@ -171,9 +240,26 @@
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/bg_surface"
                 app:cardCornerRadius="12dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TRAILER" android:textColor="@color/colorAccent" android:textStyle="bold" android:textSize="12sp" android:layout_marginBottom="8dp"/>
-                    <View android:layout_width="match_parent" android:layout_height="100dp" android:background="#333333"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="TRAILER"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="#333333" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -184,36 +270,34 @@
             android:id="@+id/tvRecomended"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VOCÊ TAMBÉM PODE GOSTAR"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:textSize="14sp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@id/infoBoxesRow"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:text="VOCÉ TAMBÉM PODE GOSTAR"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/infoBoxesRow" />
 
         <HorizontalScrollView
+            android:id="@+id/horizontalScrollMovieFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
-            android:paddingHorizontal="24dp"
             android:clipToPadding="false"
+            android:paddingHorizontal="24dp"
             android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/tvRecomended"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRecomended">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovieFilter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                
-                <View android:layout_width="160dp" android:layout_height="220dp" android:background="@color/bg_surface" android:layout_marginEnd="16dp"/>
-                <View android:layout_width="160dp" android:layout_height="220dp" android:background="@color/bg_surface" android:layout_marginEnd="16dp"/>
-                <View android:layout_width="160dp" android:layout_height="220dp" android:background="@color/bg_surface" android:layout_marginEnd="16dp"/>
-                <View android:layout_width="160dp" android:layout_height="220dp" android:background="@color/bg_surface"/>
-            </LinearLayout>
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false" />
+
         </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

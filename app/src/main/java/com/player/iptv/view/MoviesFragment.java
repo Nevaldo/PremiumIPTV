@@ -1,5 +1,6 @@
 package com.player.iptv.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.player.iptv.PlayerVodActivity;
 import com.player.iptv.R;
 import com.player.iptv.adapter.MovieAdapter;
 import com.player.iptv.model.Movie;
@@ -65,8 +67,7 @@ public class MoviesFragment extends Fragment {
         rvNew.setAdapter(newAdapter);
         rvContinue.setAdapter(continueAdapter);
 
-        MovieAdapter.OnItemClickListener click = (movie, pos) ->
-            Toast.makeText(getContext(), movie.getName(), Toast.LENGTH_SHORT).show();
+        MovieAdapter.OnItemClickListener click = (movie, pos) -> openMovieDetail(movie);
 
         featuredAdapter.setOnItemClickListener(click);
         newAdapter.setOnItemClickListener(click);
@@ -146,6 +147,27 @@ public class MoviesFragment extends Fragment {
         featuredAdapter.submitList(new ArrayList<>(list.subList(0, end1)));
         newAdapter.submitList(new ArrayList<>(list.subList(end1, end2)));
         continueAdapter.submitList(new ArrayList<>(list.subList(end2, total)));
+    }
+
+    private void openMovieDetail(Movie movie) {
+        String title = movie.getName() != null ? movie.getName() : movie.getTitle();
+        String imageUrl = movie.getStreamIcon();
+        if (imageUrl == null && movie.getInfo() != null) {
+            imageUrl = movie.getInfo().getMovieImage();
+        }
+        String subtitle = movie.getInfo() != null && movie.getInfo().getReleaseDate() != null ? movie.getInfo().getReleaseDate() : "";
+        String directSource = movie.getDirectSource();
+
+        MovieDetailFragment detail = MovieDetailFragment.newInstance(
+                movie.getStreamId(), title, directSource,
+                movie.getContainerExtension(), imageUrl, subtitle,
+                movie.getCategoryId()
+        );
+
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, detail)
+                .addToBackStack(null)
+                .commit();
     }
 
     private int dpToPx(int dp) {

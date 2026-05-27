@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
-    android:padding="24dp">
+    android:padding="18dp">
 
     <!-- Simulation of the main "Ao Vivo" content -->
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="AO VIVO"
         android:textColor="@color/text_primary"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_marginTop="4dp"
         android:text="Assista aos melhores canais em tempo real."
         android:textColor="@color/text_secondary"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvMainTitle" />
 
@@ -34,7 +34,7 @@
         android:id="@+id/highlightPlayer"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         app:cardBackgroundColor="@color/bg_surface"
         app:cardCornerRadius="5dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text="Selecione um canal"
                     android:textColor="@color/text_primary"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/live_red"
                     android:textSize="12sp"
                     android:layout_marginTop="4dp" />
 
@@ -133,7 +133,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:scrollbars="none"
         app:layout_constraintStart_toEndOf="@id/highlightPlayer"
         app:layout_constraintTop_toBottomOf="@id/tvDestaqueTitle">
@@ -143,6 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" />
+
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -162,7 +163,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         app:cardBackgroundColor="@color/bg_surface"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"

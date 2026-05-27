@@ -7,15 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.player.iptv.model.ContentCache;
+import com.player.iptv.model.Historico;
 import com.player.iptv.model.IptvCredential;
 
-@Database(entities = {IptvCredential.class, ContentCache.class}, version = 2, exportSchema = false)
+@Database(entities = {IptvCredential.class, ContentCache.class, Historico.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
 
     public abstract IptvCredentialDao iptvCredentialDao();
     public abstract ContentCacheDao contentCacheDao();
+    public abstract HistoricoDao historicoDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {

@@ -20,10 +20,16 @@ import java.util.List;
 
 public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder> {
 
+    public static final int TYPE_NORMAL   = 0;
+    public static final int TYPE_FEATURED = 1;
+    public static final int TYPE_NEW      = 2;
+    public static final int TYPE_CONTINUE = 3;
+    public static final int TYPE_SMALL    = 4;
+
     private final List<Series> items = new ArrayList<>();
     private OnItemClickListener listener;
     private int selectedPosition = -1;
-    private int layoutId = R.layout.item_series;
+    private int viewType = TYPE_NORMAL;
 
     public interface OnItemClickListener {
         void onItemClick(Series series, int position);
@@ -31,8 +37,12 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     public SeriesAdapter() {}
 
-    public SeriesAdapter(int layoutId) {
-        this.layoutId = layoutId;
+    public SeriesAdapter(int viewType) {
+        this.viewType = viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -47,11 +57,23 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return viewType;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-            .inflate(layoutId, parent, false);
+        int layout;
+        switch (viewType) {
+            case TYPE_FEATURED: layout = R.layout.item_series_featured; break;
+            case TYPE_NEW:      layout = R.layout.item_series_new;      break;
+            case TYPE_CONTINUE: layout = R.layout.item_series_continue; break;
+            case TYPE_SMALL:    layout = R.layout.item_series_small;    break;
+            default:            layout = R.layout.item_series;          break;
+        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -104,19 +126,19 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
         ViewHolder(View itemView) {
             super(itemView);
-            
+
             ImageView tempCover = itemView.findViewById(R.id.ivCover);
             if (tempCover == null) {
                 tempCover = itemView.findViewById(R.id.ivSeriesCover);
             }
             ivCover = tempCover;
-            
+
             TextView tempTitle = itemView.findViewById(R.id.tvTitle);
             if (tempTitle == null) {
                 tempTitle = itemView.findViewById(R.id.tvSeriesTitle);
             }
             tvTitle = tempTitle;
-            
+
             itemView.setFocusable(true);
             itemView.setClickable(true);
         }

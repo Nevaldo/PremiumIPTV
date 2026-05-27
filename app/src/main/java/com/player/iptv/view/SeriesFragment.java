@@ -59,16 +59,15 @@ public class SeriesFragment extends Fragment {
     // ─── Adapters ─────────────────────────────────────────────────────────────
 
     private void setupAdapters() {
-        featuredAdapter = new SeriesAdapter(R.layout.item_series_featured);
-        newAdapter      = new SeriesAdapter(R.layout.item_series_new);
-        continueAdapter = new SeriesAdapter(R.layout.item_series_continue);
+        featuredAdapter = new SeriesAdapter(SeriesAdapter.TYPE_FEATURED);
+        newAdapter      = new SeriesAdapter(SeriesAdapter.TYPE_NEW);
+        continueAdapter = new SeriesAdapter(SeriesAdapter.TYPE_CONTINUE);
 
         rvFeatured.setAdapter(featuredAdapter);
         rvNew.setAdapter(newAdapter);
         rvContinue.setAdapter(continueAdapter);
 
-        SeriesAdapter.OnItemClickListener click = (series, pos) ->
-            Toast.makeText(getContext(), series.getName(), Toast.LENGTH_SHORT).show();
+        SeriesAdapter.OnItemClickListener click = (series, pos) -> openSeriesDetail(series);
 
         featuredAdapter.setOnItemClickListener(click);
         newAdapter.setOnItemClickListener(click);
@@ -164,6 +163,36 @@ public class SeriesFragment extends Fragment {
     }
 
     // ─── Helpers ──────────────────────────────────────────────────────────────
+
+    private void openSeriesDetail(Series series) {
+        String plot = series.getPlot();
+        if (plot == null && series.getInfo() != null) {
+            plot = series.getInfo().getPlot();
+        }
+        String genre = series.getGenre();
+        if (genre == null && series.getInfo() != null) {
+            genre = series.getInfo().getGenre();
+        }
+        String releaseDate = series.getReleaseDate();
+        if (releaseDate == null && series.getInfo() != null) {
+            releaseDate = series.getInfo().getReleaseDate();
+        }
+        String cover = series.getCover();
+        if (cover == null && series.getInfo() != null) {
+            cover = series.getInfo().getCover();
+        }
+
+        String categoryId = series.getCategoryId();
+
+        SeriesDetailFragment detail = SeriesDetailFragment.newInstance(
+                series.getSeriesId(), series.getName(), cover, plot, genre, releaseDate, categoryId
+        );
+
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, detail)
+                .addToBackStack(null)
+                .commit();
+    }
 
     private int dpToPx(int dp) {
         return Math.round(dp * getResources().getDisplayMetrics().density);

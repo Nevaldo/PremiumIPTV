@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- TITULO -->
+        <TextView
+            android:text="Configurações"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Gerencie sua conta, preferências e dados do aplicativo."
+            android:textColor="#8F8F8F"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- GRID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <!-- COLUNA ESQUERDA -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- USUARIO -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="19dp"
+                    android:background="@drawable/bg_card_tv">
+
+                    <ImageView
+                        android:layout_width="74dp"
+                        android:layout_height="74dp"
+                        android:src="@drawable/ic_profile"
+                        app:tint="#A855F7"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="18dp">
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:text="João Silva"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/tvUserEmail"
+                            android:text="joaosilva@email.com"
+                            android:textColor="#9F9F9F"
+                            android:textSize="14sp"
+                            android:layout_marginTop="6dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/tvMemberSince"
+                            android:text="Membro desde: 12/03/2024"
+                            android:textColor="#727272"
+                            android:textSize="12sp"
+                            android:layout_marginTop="6dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ARMAZENAMENTO -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:background="@drawable/bg_card_tv">
+
+                    <TextView
+                        android:text="Armazenamento"
+                        android:textColor="#B14CFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tvStorageText"
+                        android:text="28,4 GB usados de 100 GB"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:layout_marginTop="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressStorage"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="18dp"
+                        android:progress="28"
+                        android:progressTint="#A855F7"
+                        android:background="#2A2A2A"/>
+
+                    <TextView
+                        android:id="@+id/tvCacheSize"
+                        android:text="Cache: 18.7 GB"
+                        android:textColor="#BDBDBD"
+                        android:textSize="14sp"
+                        android:layout_marginTop="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tvDownloadsSize"
+                        android:text="Downloads: 6.1 GB"
+                        android:textColor="#BDBDBD"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <!-- SINCRONIZAR -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:padding="24dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_card_tv">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="Sincronizar dados"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/tvLastSync"
+                            android:text="Última sincronização: 12/05/2024"
+                            android:textColor="#8F8F8F"
+                            android:textSize="14sp"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSync"
+                        android:layout_width="220dp"
+                        android:layout_height="58dp"
+                        android:text="CARREGAR DADOS"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:background="@drawable/bg_button_purple"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ESPACO -->
+            <Space
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"/>
+
+            <!-- COLUNA DIREITA -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- CACHE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_tv">
+
+                    <TextView
+                        android:text="Cache"
+                        android:textColor="#B14CFF"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="Limpe os arquivos temporários do aplicativo."
+                        android:textColor="#BDBDBD"
+                        android:textSize="14sp"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:id="@+id/btnClearCache"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:text="LIMPAR CACHE"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/bg_button_purple"/>
+                </LinearLayout>
+
+                <!-- PREFERENCIAS -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:background="@drawable/bg_card_tv">
+
+                    <TextView
+                        android:text="Preferências"
+                        android:textColor="#B14CFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="• Reprodução"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="• Notificações"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="• Aparência"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <!-- LOGOUT -->
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp"
+                    android:text="SAIR DA CONTA"
+                    android:textColor="#FF5A5A"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/bg_logout"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

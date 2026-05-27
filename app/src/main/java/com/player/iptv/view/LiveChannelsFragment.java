@@ -14,14 +14,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.MediaItem;
+import androidx.media3.datasource.cache.CacheDataSource;
 import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
 import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.player.iptv.R;
 import com.player.iptv.adapter.LiveChannelAdapter;
+import com.player.iptv.data.AppDatabase;
 import com.player.iptv.data.CredentialRepository;
+import com.player.iptv.data.HistoricoDao;
+import com.player.iptv.model.Historico;
 import com.player.iptv.model.LiveStream;
+import com.player.iptv.utils.MediaCacheManager;
 import com.player.iptv.viewmodel.LiveChannelViewModel;
 
 import java.util.List;
@@ -34,6 +40,7 @@ public class LiveChannelsFragment extends Fragment {
 
     private LiveChannelViewModel viewModel;
     private CompositeDisposable disposables = new CompositeDisposable();
+    private HistoricoDao historicoDao;
 
     private RecyclerView rvDestaques;
     private LinearLayout categoriesContainer;
@@ -76,7 +83,14 @@ public class LiveChannelsFragment extends Fragment {
         tvPlayerTitle = view.findViewById(R.id.tvPlayerTitle);
         tvPlayerSubtitle = view.findViewById(R.id.tvPlayerSubtitle);
 
-        player = new ExoPlayer.Builder(requireContext()).build();
+        historicoDao = AppDatabase.getInstance(requireContext()).historicoDao();
+
+        CacheDataSource.Factory cacheFactory = MediaCacheManager.getInstance(requireContext()).getCacheDataSourceFactory();
+        DefaultMediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(cacheFactory);
+
+        player = new ExoPlayer.Builder(requireContext())
+                .setMediaSourceFactory(mediaSourceFactory)
+                .build();
         playerView.setPlayer(player);
 
         setupAdapters();
@@ -118,6 +132,31 @@ public class LiveChannelsFragment extends Fragment {
         playerView.setVisibility(View.VISIBLE);
         tvPlayerTitle.setText(channel.getName());
         tvPlayerSubtitle.setText("Ao vivo");
+
+        saveChannelHistory(channel);
+    }
+
+    private void saveChannelHistory(LiveStream channel) {
+        disposables.add(io.reactivex.Single.fromCallable(() -> {
+            Historico existing = historicoDao.getByStream(channel.getStreamId(), "live");
+            Historico historico = new Historico(
+                    channel.getStreamId(),
+                    channel.getName(),
+                    "Ao vivo",
+                    "",
+                    channel.getStreamIcon(),
+                    "live",
+                    "m3u8",
+                    0, 0,
+                    System.currentTimeMillis()
+            );
+            if (existing != null) {
+                historico.setId(existing.getId());
+            }
+            historicoDao.insert(historico);
+            historicoDao.trimTo50();
+            return true;
+        }).subscribeOn(Schedulers.io()).subscribe());
     }
 
     private void setupViewModel() {

@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6.5"
+            android:layout_weight="7"
             android:orientation="vertical"
             android:padding="24dp"
             android:paddingEnd="12dp">
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="5dp"
                 android:focusable="true"
                 android:clickable="true"
                 android:foreground="@drawable/bg_card_border">
@@ -48,7 +48,7 @@
                         android:layout_alignParentBottom="true"
                         android:background="#AA000000"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="10dp">
 
                         <TextView
                             android:id="@+id/bannerTitle"
@@ -67,8 +67,11 @@
                             android:textColor="@color/text_secondary"
                             android:textSize="13sp"
                             android:layout_marginTop="4dp" />
+
                     </LinearLayout>
+
                 </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
             <!-- Filmes em Destaque -->
@@ -79,8 +82,8 @@
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFeaturedMovies"
@@ -99,8 +102,8 @@
                 android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFeaturedSeries"
@@ -117,7 +120,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3.5"
+            android:layout_weight="3"
             android:orientation="vertical"
             android:padding="24dp"
             android:paddingStart="12dp">
@@ -144,7 +147,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnHistorico"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:focusable="true"
                 android:clickable="true"
@@ -173,7 +176,9 @@
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:layout_marginStart="8dp" />
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <!-- Categorias em Alta -->
@@ -187,11 +192,18 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="12dp" />
 
-            <LinearLayout
-                android:id="@+id/categoriesContainer"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:scrollbars="none"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:id="@+id/categoriesContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
             <!-- Card Lançamento -->
             <TextView

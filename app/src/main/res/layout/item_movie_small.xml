@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="110dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_width="140dp"
+    android:layout_height="210dp"
+    android:layout_margin="6dp"
     android:focusable="true"
     android:clickable="true"
     app:cardBackgroundColor="@color/bg_surface"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="2dp">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    android:foreground="@drawable/bg_card_border">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivSeriesCover"
+            android:id="@+id/ivMoviePoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -28,16 +29,16 @@
             android:background="#AA08080C"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="6dp">
 
             <TextView
-                android:id="@+id/tvSeriesTitle"
+                android:id="@+id/tvMovieTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textColor="@color/text_primary"
-                android:textSize="10sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -12,12 +12,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.player.iptv.data.CredentialRepository;
+import com.player.iptv.utils.DialogUtils;
+import com.player.iptv.view.HistoricoFragment;
 import com.player.iptv.view.HomeFragment;
 import com.player.iptv.view.LiveChannelsFragment;
 import com.player.iptv.view.MovieDetailFragment;
 import com.player.iptv.view.MoviesFragment;
 import com.player.iptv.view.SeriesDetailFragment;
 import com.player.iptv.view.SeriesFragment;
+import com.player.iptv.view.SettingsFragment;
 import com.player.iptv.view.SyncFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = true;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(220);
+        params.width = dpToPx(170);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -152,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = false;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(60);
+        params.width = dpToPx(52);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -218,6 +221,10 @@ public class MainActivity extends AppCompatActivity {
             return new MoviesFragment();
         } else if (menuItemId == R.id.menuSeries) {
             return new SeriesFragment();
+        } else if (menuItemId == R.id.menuHistorico) {
+            return new HistoricoFragment();
+        } else if (menuItemId == R.id.menuConfiguracoes) {
+            return new SettingsFragment();
         }
         return new HomeFragment();
     }
@@ -255,5 +262,11 @@ public class MainActivity extends AppCompatActivity {
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round(dp * density);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogUtils.showExitAppDialog(this, () -> {finishAffinity();});
+       // super.onBackPressed();
     }
 }
