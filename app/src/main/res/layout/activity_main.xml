@@ -11,7 +11,7 @@
     <!-- Sidebar esquerda expandida (idêntica à imagem) -->
     <LinearLayout
         android:id="@+id/sidebar"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:orientation="vertical"
@@ -24,7 +24,7 @@
             android:layout_height="56dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp">
+            android:paddingHorizontal="10dp">
 
             <ImageView
                 android:id="@+id/ivLogo"
@@ -52,15 +52,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingHorizontal="8dp"
             android:layout_marginTop="8dp">
 
             <!-- Inicio (ATIVO) -->
             <LinearLayout
                 android:id="@+id/menuInicio"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item_active"
                 android:paddingHorizontal="12dp"
@@ -87,8 +86,8 @@
             <LinearLayout
                 android:id="@+id/menuAoVivo"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -114,8 +113,8 @@
             <LinearLayout
                 android:id="@+id/menuFilmes"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -141,8 +140,8 @@
             <LinearLayout
                 android:id="@+id/menuSeries"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -168,8 +167,8 @@
             <LinearLayout
                 android:id="@+id/menuFavoritos"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -195,8 +194,8 @@
             <LinearLayout
                 android:id="@+id/menuListas"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -222,8 +221,8 @@
             <LinearLayout
                 android:id="@+id/menuHistorico"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -249,8 +248,8 @@
             <LinearLayout
                 android:id="@+id/menuCategorias"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -276,8 +275,7 @@
             <LinearLayout
                 android:id="@+id/menuConfiguracoes"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="40dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/bg_menu_item"
                 android:paddingHorizontal="12dp"
@@ -290,6 +288,32 @@
                     app:tint="@color/text_secondary" />
                 <TextView
                     android:id="@+id/tvMenuConfiguracoes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configurações"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:layout_marginStart="14dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Configurações -->
+            <LinearLayout
+                android:id="@+id/menuPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_menu_item"
+                android:paddingHorizontal="12dp"
+                android:focusable="true"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_preferences"
+                    app:tint="@color/text_secondary" />
+                <TextView
+                    android:id="@+id/tvMenuPlayer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Configurações"

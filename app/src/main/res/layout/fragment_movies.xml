@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:text="Filmes"
                     android:textColor="@color/text_primary"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView

@@ -13,10 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.media3.common.MediaItem;
-import androidx.media3.datasource.cache.CacheDataSource;
-import androidx.media3.exoplayer.ExoPlayer;
-import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
 import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,8 +23,8 @@ import com.player.iptv.data.CredentialRepository;
 import com.player.iptv.data.HistoricoDao;
 import com.player.iptv.model.Historico;
 import com.player.iptv.model.LiveStream;
-import com.player.iptv.utils.MediaCacheManager;
 import com.player.iptv.viewmodel.LiveChannelViewModel;
+import com.player.iptv.viewmodel.ZappingManager;
 
 import java.util.List;
 
@@ -48,20 +44,23 @@ public class LiveChannelsFragment extends Fragment {
     private View playerOverlay;
     private TextView tvPlayerTitle;
     private TextView tvPlayerSubtitle;
+    private TextView tvChannelNumber;
     private LiveChannelAdapter destaquesAdapter;
-    private ExoPlayer player;
+    private ZappingManager zappingManager;
     private String baseUrl;
     private String username;
     private String password;
+
+    private List<LiveStream> currentChannels;
+    private boolean hasSelectedChannel = false;
 
     public LiveChannelsFragment() {}
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (player != null) {
-            player.release();
-            player = null;
+        if (zappingManager != null) {
+            zappingManager.release();
         }
         disposables.clear();
     }
@@ -82,16 +81,9 @@ public class LiveChannelsFragment extends Fragment {
         playerOverlay = view.findViewById(R.id.playerOverlay);
         tvPlayerTitle = view.findViewById(R.id.tvPlayerTitle);
         tvPlayerSubtitle = view.findViewById(R.id.tvPlayerSubtitle);
+        tvChannelNumber = view.findViewById(R.id.tvChannelNumber);
 
         historicoDao = AppDatabase.getInstance(requireContext()).historicoDao();
-
-        CacheDataSource.Factory cacheFactory = MediaCacheManager.getInstance(requireContext()).getCacheDataSourceFactory();
-        DefaultMediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(cacheFactory);
-
-        player = new ExoPlayer.Builder(requireContext())
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build();
-        playerView.setPlayer(player);
 
         setupAdapters();
         loadCredentials();
@@ -106,11 +98,37 @@ public class LiveChannelsFragment extends Fragment {
                 baseUrl = credential.getServerUrl();
                 username = credential.getUsername();
                 password = credential.getPassword();
+                setupZappingManager();
                 setupViewModel();
             }, e -> {
                 Toast.makeText(getContext(), "Erro ao carregar credenciais", Toast.LENGTH_SHORT).show();
             })
         );
+    }
+
+    private void setupZappingManager() {
+        zappingManager = new ZappingManager(requireContext(), playerView);
+        zappingManager.setCredentials(baseUrl, username, password);
+
+        zappingManager.setOnChannelChangeListener(new ZappingManager.OnChannelChangeListener() {
+            @Override
+            public void onChannelChanged(LiveStream channel, int channelNumber) {
+                tvPlayerTitle.setText(channel.getName());
+                tvPlayerSubtitle.setText("Ao vivo");
+                tvChannelNumber.setText(String.valueOf(channelNumber));
+                tvChannelNumber.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onZappingStart() {}
+
+            @Override
+            public void onZappingEnd(long durationMs) {}
+        });
+
+        zappingManager.setOnErrorListener((error, channel) -> {
+            Toast.makeText(getContext(), error + ": " + channel.getName(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void setupAdapters() {
@@ -121,18 +139,13 @@ public class LiveChannelsFragment extends Fragment {
     }
 
     private void playChannel(LiveStream channel) {
-        if (baseUrl == null || username == null || password == null) return;
+        if (zappingManager == null) return;
+        hasSelectedChannel = true;
 
-        String url = baseUrl + "live/" + username + "/" + password + "/" + channel.getStreamId() + ".m3u8";
-        MediaItem mediaItem = MediaItem.fromUri(url);
-        player.setMediaItem(mediaItem);
-        player.prepare();
-        player.play();
+        zappingManager.replaceChannelList(currentChannels);
+        zappingManager.zapToChannel(channel.getNum());
 
         playerView.setVisibility(View.VISIBLE);
-        tvPlayerTitle.setText(channel.getName());
-        tvPlayerSubtitle.setText("Ao vivo");
-
         saveChannelHistory(channel);
     }
 
@@ -174,8 +187,28 @@ public class LiveChannelsFragment extends Fragment {
     }
 
     private void onChannelsLoaded(List<LiveStream> channels) {
-        if (channels == null) return;
+        if (channels == null || channels.isEmpty()) return;
+        currentChannels = channels;
         destaquesAdapter.submitList(channels);
+
+        if (zappingManager == null) return;
+
+        if (!hasSelectedChannel) {
+            hasSelectedChannel = true;
+            zappingManager.replaceChannelList(channels);
+            zappingManager.loadChannel(0);
+            playerView.setVisibility(View.VISIBLE);
+            tvChannelNumber.setVisibility(View.VISIBLE);
+            if (zappingManager.getCurrentChannel() != null) {
+                saveChannelHistory(zappingManager.getCurrentChannel());
+            }
+        } else {
+            int currentNum = zappingManager.getCurrentChannelNumber();
+            zappingManager.replaceChannelList(channels);
+            if (currentNum > 0) {
+                zappingManager.zapToChannel(currentNum);
+            }
+        }
     }
 
     private void buildCategoryChips(List<String> categories) {

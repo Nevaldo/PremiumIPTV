@@ -13,7 +13,26 @@ public class Category {
     @SerializedName("parent_id")
     private int parentId;
 
+    private int imageResId;
+
     private boolean isSelected;
+
+    public Category() {
+    }
+
+    public Category(String categoryId, String categoryName, int parentId) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.parentId = parentId;
+    }
+
+    public int getImageResId() {
+        return imageResId;
+    }
+
+    public void setImageResId(int imageResId) {
+        this.imageResId = imageResId;
+    }
 
     public String getCategoryId() {
         return categoryId;

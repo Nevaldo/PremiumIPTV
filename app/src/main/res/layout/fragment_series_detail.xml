@@ -14,57 +14,30 @@
         <ImageView
             android:id="@+id/bgImage"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="600dp"
             android:background="#222222"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="600dp"
             android:background="@drawable/bg_fade_bottom"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Top Left "Voltar" -->
-        <LinearLayout
-            android:id="@+id/btnVoltar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="&lt; "
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VOLTAR"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- Series Info Container -->
+        <!-- Series Info Container (LEFT side ~55%) -->
         <LinearLayout
             android:id="@+id/seriesInfoContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnVoltar"
-            app:layout_constraintWidth_percent="0.5">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.52">
 
+            <!-- Genres -->
             <TextView
                 android:id="@+id/txtGenres"
                 android:layout_width="wrap_content"
@@ -74,6 +47,7 @@
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
+            <!-- Title -->
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
@@ -84,7 +58,7 @@
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
-            <!-- Tags -->
+            <!-- Meta Tags Row -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +70,7 @@
                     android:id="@+id/txtYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2011 - 2019"
+                    android:text="2011 – 2019"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
 
@@ -116,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text=" 8 Temporadas "
+                    android:text="8 Temporadas"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
 
@@ -125,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text=" 73 Episódios "
+                    android:text="73 Episódios"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
 
@@ -148,33 +122,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:lineSpacingExtra="4dp"
+                android:maxLines="4"
+                android:ellipsize="end"
                 android:text="Em uma terra onde o verão pode durar décadas e o inverno uma vida inteira, conflitos entre nobres famílias disputam o controle dos Sete Reinos de Westeros."
                 android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
-            <!-- Action Buttons -->
+            <!-- Action Buttons Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <!-- ASSISTIR BUTTON -->
                 <LinearLayout
                     android:id="@+id/btnAssistirSeries"
                     android:layout_width="wrap_content"
-                    android:layout_height="56dp"
-                    android:background="@drawable/bg_btn_primary"
-                    android:gravity="center_vertical"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_button_purple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="24dp">
+                    android:paddingHorizontal="20dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="▶ "
-                        android:textColor="@color/text_primary"
-                        android:textSize="16sp" />
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_play" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -186,296 +163,302 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ASSISTIR"
-                            android:textColor="@color/text_primary"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtAssistirEp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="T1 • E1"
-                            android:textColor="@color/text_primary"
+                            android:textColor="#DDDDDD"
                             android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <Button
+                <!-- MINHA LISTA BUTTON -->
+                <LinearLayout
                     android:id="@+id/btnMinhaLista"
                     android:layout_width="wrap_content"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="14dp"
                     android:background="@drawable/bg_btn_outline"
-                    android:backgroundTint="#00000000"
-                    android:paddingHorizontal="24dp"
-                    android:text="+ MINHA LISTA"
-                    android:textColor="@color/text_primary" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="18dp">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_plus" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="MINHA LISTA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Social Buttons -->
+                <FrameLayout
+                    android:id="@+id/btnLike"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bg_btn_circle_outline"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_btn_like" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/btnHeart"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_btn_circle_outline"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_btn_heart" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/btnShare"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/bg_btn_circle_outline"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_btn_share" />
+                </FrameLayout>
             </LinearLayout>
 
-            <!-- Tabs -->
+            <!-- TABS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="28dp"
                 android:orientation="horizontal"
-                android:paddingBottom="8dp">
+                android:paddingBottom="12dp">
 
                 <TextView
+                    android:id="@+id/tabEpisodes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:text="EPISÓDIOS"
                     android:textColor="@color/colorAccent"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tabSeasons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="TEMPORADAS"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="DETALHES"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabCast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="ELENCO"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tabRecommendations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="RECOMENDAÇÕES"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Tab Indicator -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#1A1A2A" />
+
+                <View
+                    android:id="@+id/tabIndicator"
+                    android:layout_width="78dp"
+                    android:layout_height="2dp"
+                    android:background="@color/colorAccent" />
+            </FrameLayout>
+
+            <!-- Season Selector -->
+            <LinearLayout
+                android:id="@+id/seasonSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_input_dark"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
+
+                <TextView
+                    android:id="@+id/tvSeasonSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temporada 1"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:rotation="90" />
+            </LinearLayout>
+
+            <!-- Episodes RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEpisodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- RIGHT SIDE: Mais Como Esta -->
+        <LinearLayout
+            android:id="@+id/rightRecommendations"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/bg_card_history"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="220dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/seriesInfoContainer"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MAIS COMO ESTA"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:text="TEMPORADAS"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:text="DETALHES"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:text="ELENCO"
-                    android:textColor="@color/text_secondary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RECOMENDAÇÕES"
-                    android:textColor="@color/text_secondary" />
+                    android:text="Ver mais  →"
+                    android:textColor="#888899"
+                    android:textSize="11sp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#222233" />
-
-            <View
-                android:layout_width="80dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="-2dp"
-                android:background="@color/colorAccent" />
-
-        </LinearLayout>
-
-        <!-- Right Side Recommendation List -->
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toTopOf="@id/bottomInfoRow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/seriesInfoContainer">
-
-            <LinearLayout
+            <!-- Recommendations List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSeriesFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="MAIS COMO ESTA"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvSeriesFilter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false" />
-
-                </HorizontalScrollView>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <!-- Episodes Selector & Horizontal List -->
-        <LinearLayout
-            android:id="@+id/episodesRow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="@id/seriesInfoContainer"
-            app:layout_constraintStart_toStartOf="@id/seriesInfoContainer"
-            app:layout_constraintTop_toBottomOf="@id/seriesInfoContainer">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_btn_outline"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temporada 1"
-                    android:textColor="@color/text_primary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text=" ⌄"
-                    android:textColor="@color/text_secondary" />
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:clipToPadding="false"
-                android:scrollbars="none">
+                android:nestedScrollingEnabled="false" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Episode 1 (Active) -->
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/bg_menu_item_active"
-                        android:orientation="vertical"
-                        android:padding="4dp">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:background="#333333">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center"
-                                android:background="#88000000"
-                                android:padding="8dp"
-                                android:src="@android:drawable/ic_media_play"
-                                app:tint="@color/text_primary" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:paddingHorizontal="4dp"
-                            android:text="1. Winter Is Coming"
-                            android:textColor="@color/text_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:paddingHorizontal="4dp"
-                            android:text="1h 02min"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-
-                    <!-- Episode 2 -->
-                    <LinearLayout
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/bg_btn_outline"
-                        android:orientation="vertical"
-                        android:padding="4dp">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:background="#333333" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:paddingHorizontal="4dp"
-                            android:text="2. The Kingsroad"
-                            android:textColor="@color/text_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:paddingHorizontal="4dp"
-                            android:text="56min"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
         </LinearLayout>
 
-        <!-- Bottom Info Row -->
+        <!-- BOTTOM INFO CARDS ROW -->
         <HorizontalScrollView
             android:id="@+id/bottomInfoRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="32dp"
+            android:paddingHorizontal="24dp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/episodesRow">
+            app:layout_constraintTop_toBottomOf="@id/seriesInfoContainer">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- ESTREIA -->
                 <LinearLayout
-                    android:layout_width="140dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_btn_outline"
+                    android:layout_width="130dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_settings_card"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@android:drawable/ic_menu_today"
-                        app:tint="@color/text_secondary" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_tech_calendar" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -486,32 +469,34 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ESTREIA"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp" />
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
 
                         <TextView
+                            android:id="@+id/tvInfoPremiere"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="17 de abril de 2011"
-                            android:textColor="@color/text_primary"
+                            android:textColor="#EEEEEE"
                             android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- CRIAÇÃO -->
                 <LinearLayout
-                    android:layout_width="140dp"
-                    android:layout_height="60dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_btn_outline"
+                    android:layout_width="130dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_settings_card"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@android:drawable/star_off"
-                        app:tint="@color/text_secondary" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_tech_director" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -522,14 +507,166 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="CRIAÇÃO"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvInfoCreator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="David Benioff,\nD. B. Weiss"
+                            android:textColor="#EEEEEE"
                             android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- PAÍS -->
+                <LinearLayout
+                    android:layout_width="130dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_settings_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_shield_check" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="David Benioff"
-                            android:textColor="@color/text_primary"
+                            android:text="PAÍS"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvInfoCountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estados Unidos"
+                            android:textColor="#EEEEEE"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- PLATAFORMA -->
+                <LinearLayout
+                    android:layout_width="130dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_settings_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_platform" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PLATAFORMA"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvInfoPlatform"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="HBO"
+                            android:textColor="#EEEEEE"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- IDIOMA -->
+                <LinearLayout
+                    android:layout_width="130dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_settings_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_translate" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="IDIOMA"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvInfoLanguage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Inglês"
+                            android:textColor="#EEEEEE"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- LEGENDAS -->
+                <LinearLayout
+                    android:layout_width="160dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_settings_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_cc" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LEGENDAS"
+                            android:textColor="#888899"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvInfoSubtitles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Português, Inglês,\nEspanhol +"
+                            android:textColor="#EEEEEE"
                             android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>

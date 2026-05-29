@@ -24,6 +24,7 @@ public class TmdbModels {
     public static class TmdbMovieDetails {
         public int id;
         public String title;
+        @SerializedName("original_title") public String originalTitle;
         @SerializedName("poster_path") public String posterPath;
         @SerializedName("backdrop_path") public String backdropPath;
         public String overview;
@@ -32,6 +33,13 @@ public class TmdbModels {
         @SerializedName("vote_average") public double voteAverage;
         public List<Genre> genres;
         public Credits credits;
+        @SerializedName("production_companies") public List<ProductionCompany> productionCompanies;
+    }
+
+    public static class ProductionCompany {
+        public int id;
+        public String name;
+        @SerializedName("logo_path") public String logoPath;
     }
 
     public static class Genre {

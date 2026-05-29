@@ -2,7 +2,11 @@ package com.player.iptv.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,10 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.OptIn;
 import androidx.fragment.app.Fragment;
 import androidx.media3.common.util.UnstableApi;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.player.iptv.LoginActivity;
 import com.player.iptv.MainActivity;
@@ -28,51 +28,48 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class SettingsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private CredentialPreferences preferences;
+
+    // View references
     private TextView tvUserName;
     private TextView tvUserEmail;
     private TextView tvMemberSince;
+    
+    private ProgressBar progressStorageCircular;
+    private TextView tvStoragePercent;
     private TextView tvStorageText;
-    private TextView tvCacheSize;
-    private TextView tvDownloadsSize;
+    private TextView tvCacheLegend;
+    private TextView tvDownloadsLegend;
+    private TextView tvOthersLegend;
+    
     private TextView tvLastSync;
-    private ProgressBar progressStorage;
+    private TextView tvCacheCurrent;
+    
+    // Buttons
+    private LinearLayout btnEditProfile;
+    private LinearLayout btnChangePassword;
+    private LinearLayout btnManageStorage;
     private Button btnSync;
     private Button btnClearCache;
-    private Button btnLogout;
-
-    private String tmdbBackdropUrl;
+    private LinearLayout btnPrefPlay;
+    private LinearLayout btnPrefNotif;
+    private LinearLayout btnPrefTheme;
+    private LinearLayout btnPrefParental;
+    private LinearLayout btnLogout;
 
     public SettingsFragment() {
         // Required empty public constructor
     }
 
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         preferences = new CredentialPreferences(requireContext());
     }
 
@@ -80,16 +77,32 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        // Bind views
         tvUserName = view.findViewById(R.id.tvUserName);
         tvUserEmail = view.findViewById(R.id.tvUserEmail);
         tvMemberSince = view.findViewById(R.id.tvMemberSince);
+        
+        progressStorageCircular = view.findViewById(R.id.progressStorageCircular);
+        tvStoragePercent = view.findViewById(R.id.tvStoragePercent);
         tvStorageText = view.findViewById(R.id.tvStorageText);
-        tvCacheSize = view.findViewById(R.id.tvCacheSize);
-        tvDownloadsSize = view.findViewById(R.id.tvDownloadsSize);
+        tvCacheLegend = view.findViewById(R.id.tvCacheLegend);
+        tvDownloadsLegend = view.findViewById(R.id.tvDownloadsLegend);
+        tvOthersLegend = view.findViewById(R.id.tvOthersLegend);
+        
         tvLastSync = view.findViewById(R.id.tvLastSync);
-        progressStorage = view.findViewById(R.id.progressStorage);
+        tvCacheCurrent = view.findViewById(R.id.tvCacheCurrent);
+        
+        btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        btnChangePassword = view.findViewById(R.id.btnChangePassword);
+        btnManageStorage = view.findViewById(R.id.btnManageStorage);
         btnSync = view.findViewById(R.id.btnSync);
         btnClearCache = view.findViewById(R.id.btnClearCache);
+        
+        btnPrefPlay = view.findViewById(R.id.btnPrefPlay);
+        btnPrefNotif = view.findViewById(R.id.btnPrefNotif);
+        btnPrefTheme = view.findViewById(R.id.btnPrefTheme);
+        btnPrefParental = view.findViewById(R.id.btnPrefParental);
+        
         btnLogout = view.findViewById(R.id.btnLogout);
 
         return view;
@@ -103,9 +116,23 @@ public class SettingsFragment extends Fragment {
         loadStorageInfo();
         loadLastSync();
 
+        // Bind listeners
         btnSync.setOnClickListener(v -> onSyncClick());
         btnClearCache.setOnClickListener(v -> onClearCacheClick());
         btnLogout.setOnClickListener(v -> onLogoutClick());
+        
+        // Mock buttons
+        btnEditProfile.setOnClickListener(v -> showToast("Editar perfil (Em breve)"));
+        btnChangePassword.setOnClickListener(v -> showToast("Alterar senha (Em breve)"));
+        btnManageStorage.setOnClickListener(v -> showToast("Gerenciar armazenamento (Em breve)"));
+        btnPrefPlay.setOnClickListener(v -> showToast("Preferências de Reprodução (Em breve)"));
+        btnPrefNotif.setOnClickListener(v -> showToast("Preferências de Notificações (Em breve)"));
+        btnPrefTheme.setOnClickListener(v -> showToast("Aparência e Temas (Em breve)"));
+        btnPrefParental.setOnClickListener(v -> showToast("Controle dos Pais (Em breve)"));
+    }
+    
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     private void loadUserInfo() {
@@ -120,6 +147,8 @@ public class SettingsFragment extends Fragment {
             String email = serverUrl.replaceFirst("^(https?://)", "").replaceAll("/.*", "");
             tvUserEmail.setText(email);
         }
+        
+        tvMemberSince.setText("Membro desde: 12/03/2024");
     }
 
     private void loadStorageInfo() {
@@ -133,16 +162,27 @@ public class SettingsFragment extends Fragment {
             long totalBytes = Runtime.getRuntime().totalMemory();
             long usedBytes = totalBytes - Runtime.getRuntime().freeMemory();
 
-            String cacheSize = formatBytes(cacheBytes);
-            String totalStorage = formatBytes(totalBytes);
-            String usedStorage = formatBytes(usedBytes);
-
-            tvCacheSize.setText("Cache: " + cacheSize);
-            tvDownloadsSize.setText("Memória usada: " + usedStorage);
-            tvStorageText.setText(usedStorage + " usados de " + totalStorage);
+            // Formatação de apresentação (simulando proporções parecidas com a imagem)
+            String cacheStr = formatBytes(cacheBytes);
+            String totalStr = formatBytes(totalBytes);
+            String usedStr = formatBytes(usedBytes);
 
             int progress = totalBytes > 0 ? (int) ((usedBytes * 100) / totalBytes) : 0;
-            progressStorage.setProgress(Math.min(progress, 100));
+            progress = Math.min(progress, 100);
+
+            // Atualizar views circulares
+            progressStorageCircular.setProgress(progress);
+            tvStoragePercent.setText(progress + "%");
+            
+            // Textos descritivos
+            tvStorageText.setText(usedStr + " usados de " + totalStr);
+            tvCacheLegend.setText(cacheStr);
+            tvDownloadsLegend.setText(formatBytes((long)(usedBytes * 0.3))); // Fake downloads portion
+            tvOthersLegend.setText(formatBytes((long)(usedBytes * 0.1))); // Fake others portion
+            
+            // Right panel cache input
+            tvCacheCurrent.setText(cacheStr);
+
         } catch (Exception ignored) {
         }
     }
@@ -150,9 +190,11 @@ public class SettingsFragment extends Fragment {
     private void loadLastSync() {
         long lastSync = preferences.getLastSync();
         if (lastSync > 0) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.getDefault());
             String date = sdf.format(new Date(lastSync));
             tvLastSync.setText("Última sincronização: " + date);
+        } else {
+            tvLastSync.setText("Nenhuma sincronização recente");
         }
     }
 
@@ -194,7 +236,7 @@ public class SettingsFragment extends Fragment {
 
     private void onClearCacheClick() {
         DialogUtils.showPremiumDialog(requireContext(),
-                R.drawable.ic_settings,
+                R.drawable.ic_trash_outline,
                 "Limpar Cache",
                 "Isso irá remover todos os arquivos temporários e dados em cache. Deseja continuar?",
                 "LIMPAR",
@@ -225,7 +267,7 @@ public class SettingsFragment extends Fragment {
 
     private void onLogoutClick() {
         DialogUtils.showPremiumDialog(requireContext(),
-                R.drawable.ic_settings,
+                R.drawable.ic_logout_red,
                 "Sair da Conta",
                 "Tem certeza que deseja sair da sua conta? Você precisará fazer login novamente.",
                 "SAIR",

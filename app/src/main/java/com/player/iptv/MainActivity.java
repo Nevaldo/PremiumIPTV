@@ -1,5 +1,6 @@
 package com.player.iptv;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.Transition;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.player.iptv.data.CredentialRepository;
 import com.player.iptv.utils.DialogUtils;
+import com.player.iptv.view.CategoriesFragment;
 import com.player.iptv.view.FavoritosFragment;
 import com.player.iptv.view.HistoricoFragment;
 import com.player.iptv.view.HomeFragment;
@@ -90,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
                 scheduleSync();
             }
         }
+
+        findViewById(R.id.menuPlayer).setOnClickListener(v -> {
+            Intent intent = new Intent(this, PlayerLiveActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupSidebarFocus() {
@@ -141,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = true;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(160);
+        params.width = dpToPx(150);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -159,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMenuExpanded = false;
         ViewGroup.LayoutParams params = sidebar.getLayoutParams();
-        params.width = dpToPx(60);
+        params.width = dpToPx(50);
         sidebar.setLayoutParams(params);
 
         for (int id : viewsToToggle) {
@@ -241,6 +248,8 @@ public class MainActivity extends AppCompatActivity {
             return new FavoritosFragment();
         } else if (menuItemId == R.id.menuHistorico) {
             return new HistoricoFragment();
+        } else if (menuItemId == R.id.menuCategorias) {
+            return new CategoriesFragment();
         } else if (menuItemId == R.id.menuConfiguracoes) {
             return new SettingsFragment();
         }

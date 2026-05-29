@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="AO VIVO"
         android:textColor="@color/text_primary"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,9 +65,19 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tvChannelNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/tvPlayerTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="Selecione um canal"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"

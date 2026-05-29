@@ -25,50 +25,78 @@ public class SeriesFilterAdapter extends RecyclerView.Adapter<SeriesFilterAdapte
 
     private final List<Series> seriesList = new ArrayList<>();
     private OnSeriesClickListener listener;
+    /** Use row layout (for vertical "Mais como esta" panel) instead of poster card */
+    private boolean useRowLayout = false;
 
     public void setOnSeriesClickListener(OnSeriesClickListener listener) {
         this.listener = listener;
     }
 
+    public void setUseRowLayout(boolean useRowLayout) {
+        this.useRowLayout = useRowLayout;
+    }
+
     public void submitList(List<Series> list) {
         seriesList.clear();
-        if (list != null) {
-            seriesList.addAll(list);
-        }
+        if (list != null) seriesList.addAll(list);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_small, parent, false);
-        return new ViewHolder(view);
+        int layout = useRowLayout ? R.layout.item_series_row : R.layout.item_movie_small;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        return new ViewHolder(view, useRowLayout);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Series series = seriesList.get(position);
-
         String name = series.getName() != null ? series.getName() : "";
-        holder.tvTitle.setText(name);
 
         String cover = series.getCover();
-        if (cover == null && series.getInfo() != null) {
-            cover = series.getInfo().getCover();
-        }
-        if (cover != null && !cover.isEmpty()) {
-            Glide.with(holder.itemView.getContext())
-                    .load(cover)
-                    .transform(new CenterCrop())
-                    .placeholder(R.color.bg_surface)
-                    .error(R.color.bg_surface)
-                    .into(holder.ivPoster);
+        if (cover == null && series.getInfo() != null) cover = series.getInfo().getCover();
+
+        if (useRowLayout) {
+            // Row style
+            holder.tvRowTitle.setText(name);
+
+            // Build meta info
+            String releaseDate = series.getReleaseDate();
+            if (releaseDate == null && series.getInfo() != null) releaseDate = series.getInfo().getReleaseDate();
+            String meta = (releaseDate != null && releaseDate.length() >= 4) ? releaseDate.substring(0, 4) : "";
+            holder.tvRowMeta.setText(meta);
+
+            String ratingStr = series.getRating();
+            if ((ratingStr == null || ratingStr.isEmpty()) && series.getInfo() != null) {
+                ratingStr = series.getInfo().getRating();
+            }
+            holder.tvRowRating.setText((ratingStr != null && !ratingStr.isEmpty()) ? ratingStr : "—");
+
+            if (cover != null && !cover.isEmpty()) {
+                Glide.with(holder.itemView.getContext())
+                        .load(cover)
+                        .transform(new CenterCrop())
+                        .placeholder(R.color.bg_surface)
+                        .error(R.color.bg_surface)
+                        .into(holder.ivRowPoster);
+            }
+        } else {
+            // Poster card style
+            holder.tvTitle.setText(name);
+            if (cover != null && !cover.isEmpty()) {
+                Glide.with(holder.itemView.getContext())
+                        .load(cover)
+                        .transform(new CenterCrop())
+                        .placeholder(R.color.bg_surface)
+                        .error(R.color.bg_surface)
+                        .into(holder.ivPoster);
+            }
         }
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onSeriesClick(series);
-            }
+            if (listener != null) listener.onSeriesClick(series);
         });
     }
 
@@ -78,13 +106,24 @@ public class SeriesFilterAdapter extends RecyclerView.Adapter<SeriesFilterAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView ivPoster;
-        final TextView tvTitle;
+        // Poster card refs
+        ImageView ivPoster;
+        TextView tvTitle;
+        // Row refs
+        ImageView ivRowPoster;
+        TextView tvRowTitle, tvRowMeta, tvRowRating;
 
-        ViewHolder(View itemView) {
+        ViewHolder(View itemView, boolean row) {
             super(itemView);
-            ivPoster = itemView.findViewById(R.id.ivMoviePoster);
-            tvTitle = itemView.findViewById(R.id.tvMovieTitle);
+            if (row) {
+                ivRowPoster = itemView.findViewById(R.id.ivSeriesRowPoster);
+                tvRowTitle = itemView.findViewById(R.id.tvSeriesRowTitle);
+                tvRowMeta = itemView.findViewById(R.id.tvSeriesRowMeta);
+                tvRowRating = itemView.findViewById(R.id.tvSeriesRowRating);
+            } else {
+                ivPoster = itemView.findViewById(R.id.ivMoviePoster);
+                tvTitle = itemView.findViewById(R.id.tvMovieTitle);
+            }
         }
     }
 }
