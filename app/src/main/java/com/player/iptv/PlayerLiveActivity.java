@@ -331,11 +331,6 @@ public class PlayerLiveActivity extends AppCompatActivity {
         if (btnFullscreen != null) btnFullscreen.setOnClickListener(v ->
                 showToast("Modo de tela cheia ativo"));
 
-        // Premium badge
-        View btnPremium = findViewById(R.id.btnPremium);
-        if (btnPremium != null) btnPremium.setOnClickListener(v ->
-                showToast("Premium ativo! Desfrute de todos os canais."));
-
         // Ver programação
         View btnVer = findViewById(R.id.btnVerProgramacao);
         if (btnVer != null) btnVer.setOnClickListener(v ->

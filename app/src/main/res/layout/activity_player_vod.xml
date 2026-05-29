@@ -82,36 +82,6 @@
                     android:layout_marginStart="2dp"/>
             </LinearLayout>
 
-            <!-- Botão Premium do Meio -->
-            <LinearLayout
-                android:id="@+id/btnPremium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bg_player_btn_purple_border"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="6dp"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_diamond"
-                    app:tint="#8B3DFF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PREMIUM"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="11sp"
-                    android:layout_marginStart="6dp" />
-            </LinearLayout>
-
             <!-- Canto Superior Direito: Relógio, Pesquisa, Configurações, Tela Cheia -->
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -403,6 +373,7 @@
                     android:textSize="11sp"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
+
         </LinearLayout>
 
         <!-- 4. CONTROLES DE ÁUDIO/VOLUME E BOTÕES AUXILIARES (Acima da Seekbar) -->
@@ -413,43 +384,13 @@
             android:layout_above="@id/seekbarLayout"
             android:layout_marginBottom="16dp">
 
-            <!-- Lado Esquerdo: Volume slider horizontal -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true">
-
-                <ImageView
-                    android:id="@+id/btnVolume"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_volume"
-                    app:tint="#FFFFFF"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <SeekBar
-                    android:id="@+id/volumeSeekBar"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:max="100"
-                    android:progress="80"
-                    android:progressTint="#8B3DFF"
-                    android:progressBackgroundTint="#44FFFFFF"
-                    android:thumbTint="#FFFFFF"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
             <!-- Centro: Botões de Navegação de Mídia -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:layout_centerInParent="true">
 
                 <ImageView
@@ -575,6 +516,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </RelativeLayout>
 
         <!-- 5. PAINEL CENTRAL (Informações e Play/Pause +10/-10) -->
@@ -711,7 +653,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true">
 
                 <!-- Retroceder 10s -->
@@ -720,7 +663,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_rewind_10"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="50dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"/>
@@ -749,7 +692,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_forward_10"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="50dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:focusable="true"/>
@@ -818,6 +761,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
         </RelativeLayout>
 
     </RelativeLayout>

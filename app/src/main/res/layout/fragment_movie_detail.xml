@@ -15,9 +15,15 @@
             android:id="@+id/bgImage"
             android:layout_width="match_parent"
             android:layout_height="600dp"
-            android:background="#4A2B15"
+            android:background="#222222"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Left gradient for info readability -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:background="@drawable/bg_fade_left" />
 
         <!-- Gradient Overlay to blend with background -->
         <View
@@ -322,7 +328,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="2"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -658,13 +664,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/bg_surface"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -678,7 +684,7 @@
                     <!-- Imagem do Trailer fake com botao Play -->
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="120dp">
+                        android:layout_height="160dp">
 
                         <ImageView
                             android:id="@+id/imgTrailerBg"
@@ -719,7 +725,9 @@
                             android:textColor="#FFFFFF"
                             android:textSize="10sp" />
                     </FrameLayout>
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>

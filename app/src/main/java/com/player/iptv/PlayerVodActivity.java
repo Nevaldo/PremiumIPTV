@@ -114,10 +114,8 @@ public class PlayerVodActivity extends AppCompatActivity {
         btnPlayPause = findViewById(R.id.btnPlayPause);
         ivPlayPauseCentral = findViewById(R.id.ivPlayPauseCentral);
         btnPlay = findViewById(R.id.btnPlay);
-        btnVolume = findViewById(R.id.btnVolume);
         btnFullscreen = findViewById(R.id.btnFullscreen);
         seekBar = findViewById(R.id.seekBar);
-        volumeSeekBar = findViewById(R.id.volumeSeekBar);
         tvCurrentTime = findViewById(R.id.tvCurrentTime);
         tvTotalTime = findViewById(R.id.tvTotalTime);
         tvSystemTime = findViewById(R.id.tvSystemTime);
@@ -330,35 +328,9 @@ public class PlayerVodActivity extends AppCompatActivity {
 
         View btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) btnBack.setOnClickListener(v -> saveAndExit());
-        
-        View btnPremium = findViewById(R.id.btnPremium);
-        if (btnPremium != null) btnPremium.setOnClickListener(v -> showMockToast("Premium Ativo!"));
 
         setupMockListeners();
 
-        if (volumeSeekBar != null) {
-            volumeSeekBar.setProgress(80);
-            if (player != null) player.setVolume(0.8f);
-            volumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if (fromUser && player != null) {
-                        player.setVolume(progress / 100f);
-                        isMuted = (progress == 0);
-                        btnVolume.setColorFilter(getColor(isMuted ? R.color.text_secondary : R.color.text_primary));
-                    }
-                }
-                @Override public void onStartTrackingTouch(SeekBar seekBar) { handler.removeCallbacks(hideRunnable); }
-                @Override public void onStopTrackingTouch(SeekBar seekBar) { resetAutoHide(); }
-            });
-        }
-
-        btnVolume.setOnClickListener(v -> {
-            isMuted = !isMuted;
-            if (player != null) player.setVolume(isMuted ? 0f : 0.8f);
-            if (volumeSeekBar != null) volumeSeekBar.setProgress(isMuted ? 0 : 80);
-            btnVolume.setColorFilter(getColor(isMuted ? R.color.text_secondary : R.color.text_primary));
-        });
 
         btnFullscreen.setOnClickListener(v -> {
             saveAndExit();
@@ -375,7 +347,7 @@ public class PlayerVodActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                handler.removeCallbacks(hideRunnable);
+               // handler.removeCallbacks(hideRunnable);
             }
 
             @Override

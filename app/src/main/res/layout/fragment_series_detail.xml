@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
@@ -18,6 +19,13 @@
             android:background="#222222"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Left gradient for info readability -->
+        <View
+            android:layout_width="500dp"
+            android:layout_height="600dp"
+            android:background="@drawable/bg_fade_left"
+            tools:ignore="MissingConstraints" />
 
         <View
             android:layout_width="match_parent"
@@ -149,8 +157,8 @@
                     android:paddingHorizontal="20dp">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:src="@drawable/ic_play" />
 
                     <LinearLayout
