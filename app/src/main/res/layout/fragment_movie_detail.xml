@@ -135,7 +135,7 @@
                 <LinearLayout
                     android:id="@+id/btnAssistir"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/bg_button_purple"
                     android:clickable="true"
                     android:focusable="true"
@@ -144,8 +144,8 @@
                     android:paddingHorizontal="24dp">
 
                     <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:src="@drawable/ic_play" />
 
                     <TextView
@@ -162,7 +162,7 @@
                 <LinearLayout
                     android:id="@+id/btnMinhaLista"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="16dp"
                     android:background="@drawable/bg_btn_outline"
                     android:clickable="true"

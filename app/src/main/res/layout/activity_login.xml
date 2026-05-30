@@ -272,9 +272,12 @@
 
                     <!-- Google -->
                     <LinearLayout
+                        android:id="@+id/btn_google"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
+                        android:focusable="true"
+                        android:clickable="true"
                         android:background="@drawable/bg_login_social"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -343,6 +346,7 @@
                             android:textSize="12sp"
                             android:layout_marginStart="6dp" />
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- Criar conta -->

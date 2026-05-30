@@ -1,5 +1,6 @@
 package com.player.iptv.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.player.iptv.PlayerLiveActivity;
 import com.player.iptv.R;
 import com.player.iptv.adapter.LiveChannelAdapter;
 import com.player.iptv.data.AppDatabase;
@@ -87,6 +89,12 @@ public class LiveChannelsFragment extends Fragment {
 
         setupAdapters();
         loadCredentials();
+
+        playerOverlay.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getContext(), PlayerLiveActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadCredentials() {
@@ -252,7 +260,7 @@ public class LiveChannelsFragment extends Fragment {
 
     private void selectChip(TextView tv) {
         tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary));
-        tv.setBackgroundResource(R.drawable.bg_menu_item_active);
+        tv.setBackgroundResource(R.drawable.bg_item_focus);
     }
 
     private int dpToPx(int dp) {

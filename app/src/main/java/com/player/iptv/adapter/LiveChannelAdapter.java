@@ -43,8 +43,7 @@ public class LiveChannelAdapter extends RecyclerView.Adapter<LiveChannelAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_channel, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_channel, parent, false);
         return new ViewHolder(view);
     }
 
@@ -73,6 +72,14 @@ public class LiveChannelAdapter extends RecyclerView.Adapter<LiveChannelAdapter.
 
             if (listener != null) {
                 listener.onItemClick(channel, pos);
+            }
+        });
+
+        holder.itemView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                holder.itemView.setBackgroundResource(R.drawable.bg_item_focus);
+            }else{
+                holder.itemView.setBackgroundResource(R.drawable.bg_card_history);
             }
         });
     }

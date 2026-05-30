@@ -93,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        findViewById(R.id.menuPlayer).setOnClickListener(v -> {
-            Intent intent = new Intent(this, PlayerLiveActivity.class);
-            startActivity(intent);
-        });
+//        findViewById(R.id.menuPlayer).setOnClickListener(v -> {
+//            Intent intent = new Intent(this, PlayerLiveActivity.class);
+//            startActivity(intent);
+//        });
     }
 
     private void setupSidebarFocus() {

@@ -29,6 +29,7 @@ import com.player.iptv.adapter.PlayerChannelAdapter;
 import com.player.iptv.data.AppDatabase;
 import com.player.iptv.data.CredentialPreferences;
 import com.player.iptv.data.HistoricoDao;
+import com.player.iptv.model.ContentCache;
 import com.player.iptv.model.Historico;
 import com.player.iptv.model.LiveStream;
 
@@ -136,11 +137,7 @@ public class PlayerLiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Fullscreen immersive
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        );
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         setContentView(R.layout.activity_player_live);
 
@@ -425,17 +422,15 @@ public class PlayerLiveActivity extends AppCompatActivity {
         if (recyclerChannels == null) return;
 
         channelAdapter = new PlayerChannelAdapter();
-        recyclerChannels.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerChannels.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerChannels.setAdapter(channelAdapter);
 
         // Load channels from DB (same pattern as LiveChannelViewModel)
         disposables.add(
                 Single.<List<LiveStream>>create(emitter -> {
-                    List<com.player.iptv.model.ContentCache> caches =
-                            AppDatabase.getInstance(this).contentCacheDao().getByType("live_streams");
+                    List<ContentCache> caches = AppDatabase.getInstance(this).contentCacheDao().getByType("live_streams");
                     List<LiveStream> result = new ArrayList<>();
-                    for (com.player.iptv.model.ContentCache cache : caches) {
+                    for (ContentCache cache : caches) {
                         try {
                             LiveStream s = gson.fromJson(cache.getJson(), LiveStream.class);
                             if (s != null) result.add(s);
@@ -546,10 +541,7 @@ public class PlayerLiveActivity extends AppCompatActivity {
     private void saveChannelHistory(LiveStream channel) {
         disposables.add(Single.fromCallable(() -> {
             Historico existing = historicoDao.getByStream(channel.getStreamId(), "live");
-            Historico h = new Historico(
-                    channel.getStreamId(), channel.getName(), "Ao vivo",
-                    "", channel.getStreamIcon(), "live", "m3u8",
-                    0, 0, System.currentTimeMillis());
+            Historico h = new Historico(channel.getStreamId(), channel.getName(), "Ao vivo", "", channel.getStreamIcon(), "live", "m3u8", 0, 0, System.currentTimeMillis());
             if (existing != null) h.setId(existing.getId());
             historicoDao.insert(h);
             historicoDao.trimTo50();

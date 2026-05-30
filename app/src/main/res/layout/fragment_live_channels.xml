@@ -59,7 +59,10 @@
                 android:id="@+id/playerOverlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#66000000"
+                android:background="@drawable/bg_item_focus"
+                android:focusable="true"
+                android:clickable="true"
+
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -325,6 +328,7 @@
                                 android:textColor="@color/text_secondary"
                                 android:textSize="10sp" />
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
